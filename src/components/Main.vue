@@ -53,7 +53,7 @@
    }
 </script>
 
-<style>
+<style scoped>
    .item {
       width: 300px;
       height: auto;

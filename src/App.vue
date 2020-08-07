@@ -1,27 +1,17 @@
 <template>
    <div id="app">
-      <Navbar></Navbar>
-      <b-container>
-         <Main></Main>
-      </b-container>
+      <router-view></router-view>
    </div>
 </template>
 
 <script>
-   import Navbar from './components/Navbar.vue'
-   import Main from './components/Main.vue'
-
-   export default {
-      name: 'App',
-      components: {
-         Navbar,
-         Main
-      }
-   }
+export default {
+   name: 'App'
+}
 </script>
 
 <style>
- #app {
-   background-color: #c0c5c7;
- }
+   #app {
+      background-color: #c0c5c7;
+   }
 </style>
