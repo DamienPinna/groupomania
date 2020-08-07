@@ -1,6 +1,6 @@
 <template>
   <div>
-      <b-navbar toggleable="sm" type="dark" variant="info">
+      <b-navbar toggleable="md" type="dark" variant="info">
          <b-navbar-brand href="#">
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
@@ -43,9 +43,19 @@
       height: auto;
    }
 
+   .navbar {
+      padding: 8px 10%;
+   }
+
    .navbar-brand {
       display: flex;
       justify-content: center;
       align-content: center;
+   }
+
+   @media screen and (max-width: 1240px) {
+      .navbar {
+         padding: 8px 16px;
+      }
    }
 </style>
