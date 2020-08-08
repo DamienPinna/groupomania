@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import AddGif from '../views/Add-gif.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-   {path: '/', name: 'Home', component: Home}
+   {path: '/', name: 'Home', component: Home},
+   {path: '/add-gif', name: 'Add-gif', component: AddGif}
 ]
 
 const router = new VueRouter({

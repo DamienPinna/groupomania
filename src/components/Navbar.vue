@@ -1,7 +1,7 @@
 <template>
   <div>
       <b-navbar toggleable="md" type="dark" variant="info">
-         <b-navbar-brand href="#">
+         <b-navbar-brand href="/">
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
 
@@ -9,7 +9,7 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-               <b-nav-item href="#"><span class="text-white">Ajouter un Gif</span></b-nav-item>
+               <b-nav-item href="/add-gif"><span class="text-white">Ajouter un Gif</span></b-nav-item>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">

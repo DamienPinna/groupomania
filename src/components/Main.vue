@@ -1,5 +1,5 @@
 <template>
-   <div class="pb-5">
+   <div class="pb-5 main">
       <div class="mx-auto pt-5 item">
          <h4>Titre</h4>
 
@@ -54,6 +54,10 @@
 </script>
 
 <style scoped>
+   .main {
+      background-color: #c0c5c7;
+   }
+   
    .item {
       width: 300px;
       height: auto;
