@@ -1,7 +1,7 @@
 <template>
   <div>
       <b-navbar toggleable="md" type="dark" variant="info">
-         <b-navbar-brand href="/">
+         <b-navbar-brand href="/home">
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
 

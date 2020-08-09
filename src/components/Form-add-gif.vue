@@ -2,7 +2,7 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Ajouter un Gif</h1>
 
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <b-form @submit="onSubmit" @reset="onReset">
          <b-form-group label="Titre :" label-for="title">
             <b-form-input id="title" v-model="form.title" required></b-form-input>
          </b-form-group>
@@ -26,8 +26,7 @@
             form: {
                title: '',
                file: null
-            },
-            show: true
+            }
          }
       },
       methods: {
