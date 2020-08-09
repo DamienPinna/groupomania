@@ -1,6 +1,6 @@
 <template>
    <b-container class="mt-4">
-      <h1 class="text-center mb-4">Authentification</h1>
+      <h1 class="text-center mb-4">Inscription</h1>
 
       <b-form @submit="onSubmit">
          <b-form-group label="Pseudo :" label-for="pseudo">
@@ -10,14 +10,14 @@
             <b-form-input type="password" id="password" v-model="form.password" required></b-form-input>
          </b-form-group>
 
-         <b-button class="mr-2" type="submit" variant="info">Connexion</b-button>
+         <b-button class="mr-2" type="submit" variant="info">Inscription</b-button>
       </b-form>
    </b-container>
 </template>
 
 <script>
    export default {
-      name: 'Form-auth',
+      name: 'Form-signup',
       data() {
          return {
             form: {
@@ -29,7 +29,7 @@
       methods: {
          onSubmit(evt) {
             evt.preventDefault()
-            console.log("Soumission du formulaire")
+            console.log("Inscription à la BDD")
          }
       }
    }

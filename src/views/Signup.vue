@@ -1,19 +1,19 @@
 <template>
    <div>
       <Navbar-auth/>
-      <Form-auth/>
+      <Form-signup/>
    </div>
 </template>
 
 <script>
    import NavbarAuth from '../components/Navbar-auth.vue'
-   import FormAuth from '../components/Form-auth.vue'
+   import FormSignup from '../components/Form-signup.vue'
 
    export default {
       name: 'Home',
       components: {
          NavbarAuth,
-         FormAuth
+         FormSignup
       }
    }
 </script>
