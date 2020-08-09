@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar-auth/>
+      <Navbar-auth isDisabledLogin="true"></Navbar-auth>
       <Form-login/>
    </div>
 </template>
@@ -10,7 +10,7 @@
    import FormLogin from '../components/Form-login.vue'
 
    export default {
-      name: 'Home',
+      name: 'Login',
       components: {
          NavbarAuth,
          FormLogin

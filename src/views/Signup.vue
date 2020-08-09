@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar-auth/>
+      <Navbar-auth isDisabledSignup="true"></Navbar-auth>
       <Form-signup/>
    </div>
 </template>
@@ -10,7 +10,7 @@
    import FormSignup from '../components/Form-signup.vue'
 
    export default {
-      name: 'Home',
+      name: 'Signup',
       components: {
          NavbarAuth,
          FormSignup
