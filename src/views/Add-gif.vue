@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar/>
+      <Navbar showAllGif="true"></Navbar>
       <Form-add-gif/>
    </div>
    

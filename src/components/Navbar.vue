@@ -1,7 +1,7 @@
 <template>
   <div>
       <b-navbar toggleable="md" type="dark" variant="info">
-         <b-navbar-brand href="/home">
+         <b-navbar-brand>
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
 
@@ -9,9 +9,10 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-               <b-nav-item href="/add-gif"><span class="text-white">Ajouter un Gif</span></b-nav-item>
+               <b-nav-item v-show="showAddGif" href="/add-gif"><span class="text-white">Ajouter un Gif</span></b-nav-item>
+               <b-nav-item v-show="showAllGif" href="/home"><span class="text-white">Voir tous les Gif</span></b-nav-item>
             </b-navbar-nav>
-
+         
             <b-navbar-nav class="ml-auto">
                <b-nav-form>
                   <b-form-input size="sm" class="mr-sm-2"></b-form-input>
@@ -33,7 +34,15 @@
 
 <script>
    export default {
-      name: 'Navbar'
+      name: 'Navbar',
+      props: {
+         showAddGif: {
+            type: Boolean
+         },
+         showAllGif: {
+            type: Boolean
+         }
+      }
    }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Navbar/>
+      <Navbar showAddGif="true"></Navbar>
       <Main/>
   </div>
 </template>
