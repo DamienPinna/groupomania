@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar-auth isDisabledLogin="true"></Navbar-auth>
+      <Navbar-auth isDisabledLogin="true" borderBottomLogin="border-bottom"></Navbar-auth>
       <Form-login/>
    </div>
 </template>

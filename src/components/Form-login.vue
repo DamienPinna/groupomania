@@ -1,6 +1,6 @@
 <template>
    <b-container class="mt-4">
-      <h1 class="text-center mb-4">Authentification</h1>
+      <h1 class="text-center mb-4">Connexion</h1>
 
       <b-form @submit="onSubmit">
          <b-form-group label="Pseudo :" label-for="pseudo">
