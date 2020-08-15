@@ -21,8 +21,10 @@
                      content.
                   </b-card-text>
 
-                  <a href="#" class="card-link">Modifier</a>
-                  <b-link href="#" class="card-link">Supprimer</b-link>
+                  <div class="d-flex justify-content-between">
+                     <a href="#" class="card-link">Modifier</a>
+                     <b-link href="#" class="card-link">Supprimer</b-link>
+                  </div> 
                </b-card>
             </b-list-group>
 

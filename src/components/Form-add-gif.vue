@@ -1,6 +1,6 @@
 <template>
-   <b-container class="mt-4">
-      <h1 class="text-center mb-4">Ajouter un Gif</h1>
+   <b-container>
+      <h1 class="text-center mb-4 pt-4">Ajouter un Gif</h1>
 
       <b-form @submit="onSubmit" @reset="onReset">
          <b-form-group label="Titre :" label-for="title">
@@ -48,3 +48,9 @@
       }
    }
 </script>
+
+<style>
+   .container {
+      margin-top: 56px;
+   }
+</style>

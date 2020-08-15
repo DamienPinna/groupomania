@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar showAllGif="true"></Navbar>
+      <Navbar :showAllGif="true"></Navbar>
       <Gif/>
    </div>
    

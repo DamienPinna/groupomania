@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar-auth isDisabledSignup='true' borderBottomSignup='border-bottom'></Navbar-auth>
+      <Navbar-auth :isDisabledSignup="true" activeSignup="border-bottom font-weight-bold"></Navbar-auth>
       <Form-signup/>
    </div>
 </template>

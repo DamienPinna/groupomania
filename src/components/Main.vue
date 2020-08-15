@@ -12,8 +12,10 @@
             </div>
 
             <template v-slot:footer>
-               <a href="/gif-select" class="card-link">Commenter</a>
-               <a href="#" class="card-link">Supprimer</a>
+               <div class="d-flex justify-content-between">
+                  <a href="/gif-select" class="card-link">Commenter</a>
+                  <a href="#" class="card-link">Supprimer</a>
+               </div>
             </template>
          </b-card>
       </div>
@@ -30,8 +32,10 @@
             </div>
 
             <template v-slot:footer>
-               <a href="#" class="card-link">Commenter</a>
-               <a href="#" class="card-link">Supprimer</a>
+               <div class="d-flex justify-content-between">
+                  <a href="/gif-select" class="card-link">Commenter</a>
+                  <a href="#" class="card-link">Supprimer</a>
+               </div>
             </template>
          </b-card>
       </div>
@@ -48,23 +52,74 @@
             </div>
 
             <template v-slot:footer>
-               <a href="#" class="card-link">Commenter</a>
-               <a href="#" class="card-link">Supprimer</a>
+               <div class="d-flex justify-content-between">
+                  <a href="/gif-select" class="card-link">Commenter</a>
+                  <a href="#" class="card-link">Supprimer</a>
+               </div>
             </template>
          </b-card>
       </div>
+
+      <div class="mx-auto pt-5 item">
+         <header class="d-flex justify-content-between align-items-center">
+            <h4>Titre</h4>
+            <div>10/10/2020</div>
+         </header>
+         <div>Publié par : Damien</div>
+         <b-card no-body>
+            <div class="mx-auto">
+               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
+            </div>
+
+            <template v-slot:footer>
+               <div class="d-flex justify-content-between">
+                  <a href="/gif-select" class="card-link">Commenter</a>
+                  <a href="#" class="card-link">Supprimer</a>
+               </div>
+            </template>
+         </b-card>
+      </div>
+
+      <div class="mx-auto pt-5 item">
+         <header class="d-flex justify-content-between align-items-center">
+            <h4>Titre</h4>
+            <div>10/10/2020</div>
+         </header>
+         <div>Publié par : Damien</div>
+         <b-card no-body>
+            <div class="mx-auto">
+               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
+            </div>
+
+            <template v-slot:footer>
+               <div class="d-flex justify-content-between">
+                  <a href="/gif-select" class="card-link">Commenter</a>
+                  <a href="#" class="card-link">Supprimer</a>
+               </div>
+            </template>
+         </b-card>
+      </div>
+
+      <!-- <b-button @:click="gotoTop()" class="scroll-to-top" variant="info">Top</b-button> -->
+
    </div>
 </template>
 
 <script>
    export default {
-      name: 'Main'
+      name: 'Main',
+      // methods: {
+      //    goToTop() {
+      //       console.log('test');
+      //    }
+      // }
    }
 </script>
 
 <style scoped>
    .main {
-      background-color: #c0c5c7;
+      background-color: #d3dbdf;
+      margin-top: 56px;
    }
    
    .item {
