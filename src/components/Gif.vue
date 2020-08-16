@@ -1,5 +1,5 @@
 <template>
-   <div class="pb-5 main">
+   <div class="main">
       <div class="mx-auto pt-5 item">
          <header class="d-flex justify-content-between align-items-center">
             <h4>Titre</h4>
@@ -41,7 +41,8 @@
 
 <style scoped>
    .main {
-      background-color: #c0c5c7;
+      background-color: #d3dbdf;
+      margin-top: 56px;;
       height: 94vh;
    }
    

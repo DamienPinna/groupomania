@@ -100,7 +100,8 @@
          </b-card>
       </div>
 
-      <!-- <b-button @:click="gotoTop()" class="scroll-to-top" variant="info">Top</b-button> -->
+      <!-- <b-button @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">Top</b-button> -->
+      <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
 
    </div>
 </template>
@@ -108,11 +109,29 @@
 <script>
    export default {
       name: 'Main',
-      // methods: {
-      //    goToTop() {
-      //       console.log('test');
-      //    }
-      // }
+      data() {
+         return {
+            showGoToTopButton: false
+         }
+      },
+      methods: {
+         goToTop() {
+            window.scrollTo(0,0);
+         },
+         checkScroll() {
+            if (window.scrollY > 1000) {
+               this.showGoToTopButton = true;
+            } else {
+               this.showGoToTopButton = false;
+            }
+         }
+      },
+      mounted() {
+         window.addEventListener('scroll', this.checkScroll);
+      },
+      destroy() {
+         window.removeEventListener('scroll', this.checkScroll);
+      }
    }
 </script>
 
@@ -121,15 +140,22 @@
       background-color: #d3dbdf;
       margin-top: 56px;
    }
+
+   .btn-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      width: 50px;
+   }
    
    .item {
       width: 300px;
       height: auto;
    }
 
-   @media screen and (max-width: 360px) {
-      .item {
-         width: 100%;
+   @media screen and (max-width: 550px) {
+      .btn-to-top {
+         display: none;
       }
    }
 </style>

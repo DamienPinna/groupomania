@@ -28,8 +28,8 @@
       },
       methods: {
          onSubmit(evt) {
-            evt.preventDefault()
-            console.log("Inscription à la BDD")
+            evt.preventDefault();
+            console.log("Inscription à la BDD");
          }
       }
    }

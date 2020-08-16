@@ -31,19 +31,14 @@
       },
       methods: {
          onSubmit(evt) {
-            evt.preventDefault()
-            console.log("Soumission du formulaire")
+            evt.preventDefault();
+            console.log("Soumission du formulaire");
          },
          onReset(evt) {
-            evt.preventDefault()
+            evt.preventDefault();
             // Reset our form values
-            this.form.title = ''
-            this.form.file = null
-            // Trick to reset/clear native browser form validation state
-            this.show = false
-            this.$nextTick(() => {
-               this.show = true
-            })
+            this.form.title = '';
+            this.form.file = null;
          }
       }
    }

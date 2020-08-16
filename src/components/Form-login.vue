@@ -28,8 +28,8 @@
       },
       methods: {
          onSubmit(evt) {
-            evt.preventDefault()
-            console.log("Test authentification")
+            evt.preventDefault();
+            console.log("Test authentification");
          }
       }
    }
