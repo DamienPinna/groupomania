@@ -1,17 +1,9 @@
 const express = require('express');
-const db = require('./db');
+
+const publicationsRoutes = require('./routes/publications');
 
 const app = express();
 
-db.connection();
-db.instance.query('SELECT * FROM user', function (error, results, fields) {
-   if (error) throw error;
-   console.log(results);
-});
-db.disconnection();
-
-app.use('/api/test',(req, res) => {
-   res.json({ message: 'Votre requête a bien été reçue !' }); 
-});
+app.use('/api/publications', publicationsRoutes);
 
 module.exports = app;
