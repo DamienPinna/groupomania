@@ -1,7 +1,7 @@
 const db = require('../db');
 
 /**
- * Créer une publication.
+ * Créé une publication.
  */
 exports.createPublication = (req, res) => {
    db.connection();
