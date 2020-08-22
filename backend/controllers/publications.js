@@ -38,7 +38,7 @@ exports.deletePublication = (req, res) => {
                      WHERE postId = ${req.params.id};`,
    function (error, results, fields) {
       if (error) throw error;
-      res.status(200).json({message: 'Publication modifiée'});
+      res.status(200).json({message: 'Publication supprimée'});
       db.disconnection();
    });
 };
