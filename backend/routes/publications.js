@@ -6,6 +6,7 @@ const publicationsController = require('../controllers/publications');
 
 router.post('/', multer, publicationsController.createPublication);
 router.put('/:id', publicationsController.modifyPublication);
+router.delete('/:id', publicationsController.deletePublication);
 router.get('/:id', publicationsController.getOnePublication);
 router.get('/', publicationsController.getAllPublications);
 

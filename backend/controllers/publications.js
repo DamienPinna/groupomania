@@ -30,6 +30,20 @@ exports.modifyPublication = (req, res) => {
 };
 
 /**
+ * Supprime une publication.
+ */
+exports.deletePublication = (req, res) => {
+   db.connection();
+   db.instance.query(`DELETE FROM post
+                     WHERE postId = ${req.params.id};`,
+   function (error, results, fields) {
+      if (error) throw error;
+      res.status(200).json({message: 'Publication modifiée'});
+      db.disconnection();
+   });
+};
+
+/**
  * Cherche une publication.
  */
 exports.getOnePublication = (req, res) => {
