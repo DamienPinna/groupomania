@@ -22,6 +22,7 @@ const db = {
 
    disconnection() {
       this.instance.end();
+      console.log('Successful database disconnection.');
    }
 }
 
