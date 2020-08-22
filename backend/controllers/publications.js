@@ -15,6 +15,21 @@ exports.createPublication = (req, res) => {
 };
 
 /**
+ * Modifie le titre de la publication.
+ */
+exports.modifyPublication = (req, res) => {
+   db.connection();
+   db.instance.query(`UPDATE post 
+                     SET title = "${req.body.title}"
+                     WHERE postId = ${req.params.id};`,
+   function (error, results, fields) {
+      if (error) throw error;
+      res.status(200).json({message: 'Publication modifiée'});
+      db.disconnection();
+   });
+};
+
+/**
  * Cherche une publication.
  */
 exports.getOnePublication = (req, res) => {
@@ -30,9 +45,8 @@ exports.getOnePublication = (req, res) => {
       if (error) throw error;
       res.status(200).json(results);
       db.disconnection();
-   }); 
+   });
 };
-
 
 /**
  * Cherche toutes les publications.
