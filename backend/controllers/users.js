@@ -41,8 +41,10 @@ exports.signup = async (req, res) => {
  */
 exports.login = async (req, res) => {
    db.connection();
-   db.instance.query(`SELECT userId, login, password
+   db.instance.query(`SELECT userId, login, password, role
                      FROM user
+                     INNER JOIN role
+                     ON user.roleId = role.roleId
                      WHERE login="${req.body.login}";`,
    async function (error, results, fields) {
       if (error) throw error;
@@ -54,7 +56,11 @@ exports.login = async (req, res) => {
          res.status(200).json({
             userId: user[0].userId,
             token: jwt.sign(
-               {userId: user[0].userId},
+               {
+                  userId: user[0].userId,
+                  login: user[0].login,
+                  role: user[0].role
+               },
                process.env.SECRET,
                {expiresIn: '24h'}
             )

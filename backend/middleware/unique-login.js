@@ -10,8 +10,8 @@ module.exports = (req, res, next) => {
  
       let loginIsUnique = true;
 
-      users.forEach(element => {
-         if (element.login === req.body.login) {
+      users.forEach(user => {
+         if (user.login === req.body.login) {
             res.status(409).json({message: 'Login déjà utilisé'});
             loginIsUnique = false;
             db.disconnection();
