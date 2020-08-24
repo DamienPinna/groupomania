@@ -100,7 +100,6 @@
          </b-card>
       </div>
 
-      <!-- <b-button @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">Top</b-button> -->
       <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
 
    </div>
@@ -119,7 +118,7 @@
             window.scrollTo(0,0);
          },
          checkScroll() {
-            if (window.scrollY > 1000) {
+            if (window.scrollY > 500) {
                this.showGoToTopButton = true;
             } else {
                this.showGoToTopButton = false;

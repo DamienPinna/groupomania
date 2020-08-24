@@ -24,7 +24,7 @@
                      <span class="text-white">Damien</span>
                   </template>
                   <b-dropdown-item href="#">Supprimer profil</b-dropdown-item>
-                  <b-dropdown-item href="#">Déconnexion</b-dropdown-item>
+                  <b-dropdown-item @click="logout">Déconnexion</b-dropdown-item>
                </b-nav-item-dropdown>
             </b-navbar-nav>
          </b-collapse>
@@ -35,6 +35,12 @@
 <script>
    export default {
       name: 'Navbar',
+      methods: {
+         logout() {
+            localStorage.removeItem('token');
+            window.location.href = "/";
+         }
+      },
       props: {
          showAddGif: {
             type: Boolean

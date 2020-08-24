@@ -2,9 +2,9 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Connexion</h1>
 
-      <b-form @submit="onSubmit">
-         <b-form-group label="Pseudo :" label-for="pseudo">
-            <b-form-input type="text" id="pseudo" v-model="form.pseudo" required></b-form-input>
+      <b-form @submit.prevent="onSubmit">
+         <b-form-group label="Login :" label-for="login">
+            <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
          </b-form-group>
          <b-form-group label="Mot de passe :" label-for="password">
             <b-form-input type="password" id="password" v-model="form.password" required></b-form-input>
@@ -16,20 +16,31 @@
 </template>
 
 <script>
+   import axios from 'axios';
+
    export default {
       name: 'Form-login',
       data() {
          return {
             form: {
-               pseudo: '',
+               login: '',
                password: ''
             }
          }
       },
       methods: {
-         onSubmit(evt) {
-            evt.preventDefault();
-            console.log("Test authentification");
+         onSubmit() {
+            axios.post('http://localhost:3000/api/auth/login', {
+               login: this.form.login,
+               password: this.form.password
+            })
+            .then(response => {
+               localStorage.setItem('token', response.data.token);
+               window.location.href = "/home";
+            })
+            .catch(error => {
+               console.error(error);
+            })
          }
       }
    }
