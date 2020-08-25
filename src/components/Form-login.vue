@@ -2,7 +2,7 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Connexion</h1>
 
-      <b-form @submit.prevent="onSubmit">
+      <b-form @submit.prevent="login">
          <b-form-group label="Login :" label-for="login">
             <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
          </b-form-group>
@@ -29,7 +29,7 @@
          }
       },
       methods: {
-         onSubmit() {
+         login() {
             axios.post('http://localhost:3000/api/auth/login', {
                login: this.form.login,
                password: this.form.password

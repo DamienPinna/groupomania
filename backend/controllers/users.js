@@ -32,6 +32,7 @@ exports.signup = async (req, res) => {
       });
    } else {
       res.status(500).json({message: "Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 nombre, 1 caractère spécial et pas d'espace."});
+      db.disconnection();
    };
 };
 
@@ -68,6 +69,7 @@ exports.login = async (req, res) => {
          db.disconnection();
       } catch (error) {
          res.status(500).json({error});
+         db.disconnection();
       };
    });
 };
