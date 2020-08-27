@@ -48,12 +48,8 @@
                login: this.form.login,
                password: this.form.password
             })
-            .then(() => {
-               this.login();
-            })
-            .catch(error => {
-               console.error(error);
-            })
+            .then(() => {this.login()})
+            .catch(error => {console.error(error)})
          }
       }
    }

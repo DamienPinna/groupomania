@@ -23,7 +23,7 @@
                   <template v-slot:button-content>
                      <span class="text-white">Damien</span>
                   </template>
-                  <b-dropdown-item href="#">Supprimer profil</b-dropdown-item>
+                  <b-dropdown-item @click="deleteUser">Supprimer profil</b-dropdown-item>
                   <b-dropdown-item @click="logout">Déconnexion</b-dropdown-item>
                </b-nav-item-dropdown>
             </b-navbar-nav>
@@ -33,12 +33,29 @@
 </template>
 
 <script>
+   import axios from 'axios';
+
    export default {
       name: 'Navbar',
       methods: {
          logout() {
             localStorage.removeItem('token');
             window.location.href = "/";
+         },
+         parseJwt() {
+            const tokenFromStorage = localStorage.getItem('token');
+            if (tokenFromStorage) {
+               const base64Pauload = tokenFromStorage.split('.')[1];
+               return JSON.parse(window.atob(base64Pauload));
+            } else {
+               return 'pas de token dans le localStorage';
+            }
+         },
+         deleteUser() {
+            const userId = this.parseJwt().userId;
+            axios.delete(`http://localhost:3000/api/auth/${userId}`)
+            .then(() => {this.logout()})
+            .catch(error => {console.error(error)})
          }
       },
       props: {

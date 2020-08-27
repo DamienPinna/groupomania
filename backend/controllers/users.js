@@ -73,3 +73,18 @@ exports.login = async (req, res) => {
       };
    });
 };
+
+
+/**
+ * Supprime l'utilisateur.
+ */
+exports.deleteUser = (req, res) => {
+   db.connection();
+   db.instance.query(`DELETE FROM user
+                     WHERE userId = ${req.params.id};`,
+   function (error, results, fields) {
+      if (error) throw error;
+      res.status(200).json({message: 'Utilisateur supprimé'});
+      db.disconnection();
+   });
+};
