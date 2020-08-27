@@ -21,7 +21,7 @@
 
                <b-nav-item-dropdown right >
                   <template v-slot:button-content>
-                     <span class="text-white">Damien</span>
+                     <span class="text-white">{{ login }}</span>
                   </template>
                   <b-dropdown-item @click="deleteUser">Supprimer profil</b-dropdown-item>
                   <b-dropdown-item @click="logout">Déconnexion</b-dropdown-item>
@@ -37,25 +37,32 @@
 
    export default {
       name: 'Navbar',
+      data() {
+         return {
+            userId: '',
+            login: ''
+         }
+      },
       methods: {
          logout() {
             localStorage.removeItem('token');
             window.location.href = "/";
          },
-         parseJwt() {
-            const tokenFromStorage = localStorage.getItem('token');
-            if (tokenFromStorage) {
-               const base64Pauload = tokenFromStorage.split('.')[1];
-               return JSON.parse(window.atob(base64Pauload));
-            } else {
-               return 'pas de token dans le localStorage';
-            }
-         },
          deleteUser() {
-            const userId = this.parseJwt().userId;
-            axios.delete(`http://localhost:3000/api/auth/${userId}`)
+            axios.delete(`http://localhost:3000/api/auth/${this.userId}`)
             .then(() => {this.logout()})
             .catch(error => {console.error(error)})
+         }
+      },
+      mounted() {
+         const tokenFromStorage = localStorage.getItem('token');
+         if (tokenFromStorage) {
+            const base64Pauload = tokenFromStorage.split('.')[1];
+            const {userId, login} = (JSON.parse(window.atob(base64Pauload)));
+            this.userId = userId;
+            this.login = login;
+         } else {
+            return 'pas de token dans le localStorage';
          }
       },
       props: {

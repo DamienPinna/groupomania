@@ -145,6 +145,7 @@
       bottom: 20px;
       right: 30px;
       width: 50px;
+      cursor: pointer;
    }
    
    .item {
