@@ -46,7 +46,7 @@
       methods: {
          logout() {
             localStorage.removeItem('token');
-            window.location.href = "/";
+            this.$router.push('/');
          },
          deleteUser() {
             axios.delete(`http://localhost:3000/api/auth/${this.userId}`)
@@ -57,8 +57,8 @@
       mounted() {
          const tokenFromStorage = localStorage.getItem('token');
          if (tokenFromStorage) {
-            const base64Pauload = tokenFromStorage.split('.')[1];
-            const {userId, login} = (JSON.parse(window.atob(base64Pauload)));
+            const base64Payload = tokenFromStorage.split('.')[1];
+            const {userId, login} = (JSON.parse(window.atob(base64Payload)));
             this.userId = userId;
             this.login = login;
          } else {

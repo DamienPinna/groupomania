@@ -36,7 +36,7 @@
             })
             .then(response => {
                localStorage.setItem('token', response.data.token);
-               window.location.href = "/home";
+               this.$router.push('/home');
             })
             .catch(error => {
                console.error(error);
