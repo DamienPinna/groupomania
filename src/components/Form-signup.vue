@@ -3,7 +3,7 @@
       <h1 class="text-center mb-4">Inscription</h1>
 
       <b-form @submit.prevent="signup">
-         <b-form-group label="login :" label-for="login">
+         <b-form-group label="Pseudonyme :" label-for="login">
             <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
          </b-form-group>
          <b-form-group label="Mot de passe :" label-for="password">

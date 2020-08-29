@@ -2,8 +2,9 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Connexion</h1>
 
+      <b-alert :show="errorAuth" variant="danger" class="text-center">Pseudonyme et/ou mot de passe incorrect !</b-alert>
       <b-form @submit.prevent="login">
-         <b-form-group label="Login :" label-for="login">
+         <b-form-group label="Pseudonyme :" label-for="login">
             <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
          </b-form-group>
          <b-form-group label="Mot de passe :" label-for="password">
@@ -22,6 +23,7 @@
       name: 'Form-login',
       data() {
          return {
+            errorAuth: false,
             form: {
                login: '',
                password: ''
@@ -39,7 +41,8 @@
                this.$router.push('/home');
             })
             .catch(error => {
-               console.error(error);
+               console.error(error.message);
+               this.errorAuth = true;
             })
          }
       }
