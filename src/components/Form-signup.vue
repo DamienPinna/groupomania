@@ -2,6 +2,7 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Inscription</h1>
 
+      <b-alert :show="weakPassword" variant="danger">Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 nombre, 1 caractère spécial et pas d'espace.</b-alert>
       <b-form @submit.prevent="signup">
          <b-form-group label="Pseudonyme :" label-for="login">
             <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
@@ -22,6 +23,7 @@
       name: 'Form-signup',
       data() {
          return {
+            weakPassword: false,
             form: {
                login: '',
                password: ''
@@ -49,7 +51,10 @@
                password: this.form.password
             })
             .then(() => {this.login()})
-            .catch(error => {console.error(error)})
+            .catch(error => {
+               console.error(error);
+               this.weakPassword = true;
+            })
          }
       }
    }
