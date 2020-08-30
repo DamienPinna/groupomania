@@ -106,27 +106,42 @@
 </template>
 
 <script>
+   import axios from 'axios';
+
    export default {
       name: 'Main',
       data() {
          return {
-            showGoToTopButton: false
+            showGoToTopButton: false,
+            publications: null
          }
       },
       methods: {
          goToTop() {
             window.scrollTo(0,0);
          },
+
          checkScroll() {
-            if (window.scrollY > 500) {
-               this.showGoToTopButton = true;
-            } else {
-               this.showGoToTopButton = false;
-            }
+            if (window.scrollY > 500) this.showGoToTopButton = true;
+            else this.showGoToTopButton = false; 
+         },
+
+         getAllPublications() {
+            const tokenFromStorage = localStorage.getItem('token');
+
+            axios.get('http://localhost:3000/api/publications', {
+               headers: {'Authorization':'Bearer ' + tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response);
+               this.publications = response.data;
+            })
+            .catch(error => console.error(error));
          }
       },
       mounted() {
          window.addEventListener('scroll', this.checkScroll);
+         this.getAllPublications();
       },
       destroy() {
          window.removeEventListener('scroll', this.checkScroll);

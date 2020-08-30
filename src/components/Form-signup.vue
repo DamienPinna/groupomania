@@ -40,9 +40,7 @@
                localStorage.setItem('token', response.data.token);
                window.location.href = "/home";
             })
-            .catch(error => {
-               console.error(error);
-            })
+            .catch(error => console.error(error));
          },
 
          signup() {
@@ -50,7 +48,7 @@
                login: this.form.login,
                password: this.form.password
             })
-            .then(() => {this.login()})
+            .then(() => this.login())
             .catch(error => {
                console.error(error);
                this.weakPassword = true;

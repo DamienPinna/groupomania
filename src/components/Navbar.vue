@@ -46,10 +46,11 @@
             localStorage.removeItem('token');
             this.$router.push('/');
          },
+         
          deleteUser() {
             axios.delete(`http://localhost:3000/api/auth/${this.userId}`)
             .then(() => {this.logout()})
-            .catch(error => {console.error(error)})
+            .catch(error => console.error(error));
          }
       },
       created() {

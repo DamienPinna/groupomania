@@ -2,7 +2,7 @@
    <b-container>
       <h1 class="text-center mb-4 pt-4">Ajouter un Gif</h1>
 
-      <b-form @submit="onSubmit" @reset="onReset">
+      <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
          <b-form-group label="Titre :" label-for="title">
             <b-form-input id="title" v-model="form.title" required></b-form-input>
          </b-form-group>
@@ -30,12 +30,10 @@
          }
       },
       methods: {
-         onSubmit(evt) {
-            evt.preventDefault();
+         onSubmit() {
             console.log("Soumission du formulaire");
          },
-         onReset(evt) {
-            evt.preventDefault();
+         onReset() {
             // Reset our form values
             this.form.title = '';
             this.form.file = null;
