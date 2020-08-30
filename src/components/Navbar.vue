@@ -34,14 +34,12 @@
 
 <script>
    import axios from 'axios';
+   import { mapState } from 'vuex';
 
    export default {
       name: 'Navbar',
-      data() {
-         return {
-            userId: '',
-            login: ''
-         }
+      computed: {
+         ...mapState(['login','userId'])
       },
       methods: {
          logout() {
@@ -54,16 +52,8 @@
             .catch(error => {console.error(error)})
          }
       },
-      mounted() {
-         const tokenFromStorage = localStorage.getItem('token');
-         if (tokenFromStorage) {
-            const base64Payload = tokenFromStorage.split('.')[1];
-            const {userId, login} = (JSON.parse(window.atob(base64Payload)));
-            this.userId = userId;
-            this.login = login;
-         } else {
-            return 'pas de token dans le localStorage';
-         }
+      created() {
+         this.$store.dispatch('defineUser');
       },
       props: {
          showAddGif: {
