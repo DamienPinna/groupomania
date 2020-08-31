@@ -4,9 +4,9 @@
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header class="d-flex justify-content-between align-items-center">
                <h4>{{ publication.title }}</h4>
-               <div>{{ publication.dateStamp}}</div>
+               <div>{{ publication.date}}</div>
             </header>
-            <div>Publié par : {{ publication.login}}</div>
+            <div>Publié par : {{ publication.login }}</div>
             <b-card no-body>
                <div class="mx-auto">
                   <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
@@ -54,10 +54,7 @@
             axios.get('http://localhost:3000/api/publications', {
                headers: {'Authorization':'Bearer ' + tokenFromStorage}
             })
-            .then(response => {
-               console.log(response);
-               this.publications = response.data;
-            })
+            .then(response => this.publications = response.data)
             .catch(error => console.error(error));
          }
       },
