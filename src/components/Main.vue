@@ -1,104 +1,26 @@
 <template>
    <div class="pb-5 main">
-      <div class="mx-auto pt-5 item">
-         <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
-         </header>
-         <div>Publié par : Damien</div>
-         <b-card no-body>
-            <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
-            </div>
-
-            <template v-slot:footer>
-               <div class="d-flex justify-content-between">
-                  <a href="/gif-select" class="card-link">Commenter</a>
-                  <a href="#" class="card-link">Supprimer</a>
+      <template v-for="publication in publications">
+         <div :key="publication.postId" class="mx-auto pt-5 item">
+            <header class="d-flex justify-content-between align-items-center">
+               <h4>{{ publication.title }}</h4>
+               <div>{{ publication.dateStamp}}</div>
+            </header>
+            <div>Publié par : {{ publication.login}}</div>
+            <b-card no-body>
+               <div class="mx-auto">
+                  <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
                </div>
-            </template>
-         </b-card>
-      </div>
 
-      <div class="mx-auto pt-5 item">
-         <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
-         </header>
-         <div>Publié par : Stéphanie</div>
-         <b-card no-body>
-            <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/100/300" img-alt="Image animée"></b-card-img>
-            </div>
-
-            <template v-slot:footer>
-               <div class="d-flex justify-content-between">
-                  <a href="/gif-select" class="card-link">Commenter</a>
-                  <a href="#" class="card-link">Supprimer</a>
-               </div>
-            </template>
-         </b-card>
-      </div>
-
-      <div class="mx-auto pt-5 item">
-         <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
-         </header>
-         <div>Publié par : Antoine</div>
-         <b-card no-body>
-            <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/200/300" img-alt="Image animée"></b-card-img>
-            </div>
-
-            <template v-slot:footer>
-               <div class="d-flex justify-content-between">
-                  <a href="/gif-select" class="card-link">Commenter</a>
-                  <a href="#" class="card-link">Supprimer</a>
-               </div>
-            </template>
-         </b-card>
-      </div>
-
-      <div class="mx-auto pt-5 item">
-         <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
-         </header>
-         <div>Publié par : Damien</div>
-         <b-card no-body>
-            <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
-            </div>
-
-            <template v-slot:footer>
-               <div class="d-flex justify-content-between">
-                  <a href="/gif-select" class="card-link">Commenter</a>
-                  <a href="#" class="card-link">Supprimer</a>
-               </div>
-            </template>
-         </b-card>
-      </div>
-
-      <div class="mx-auto pt-5 item">
-         <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
-         </header>
-         <div>Publié par : Damien</div>
-         <b-card no-body>
-            <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
-            </div>
-
-            <template v-slot:footer>
-               <div class="d-flex justify-content-between">
-                  <a href="/gif-select" class="card-link">Commenter</a>
-                  <a href="#" class="card-link">Supprimer</a>
-               </div>
-            </template>
-         </b-card>
-      </div>
+               <template v-slot:footer>
+                  <div class="d-flex justify-content-between">
+                     <a href="/gif-select" class="card-link">Commenter</a>
+                     <a href="#" class="card-link">Supprimer</a>
+                  </div>
+               </template>
+            </b-card>
+         </div>
+      </template>
 
       <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
 
@@ -153,6 +75,7 @@
    .main {
       background-color: #d3dbdf;
       margin-top: 56px;
+      min-height: 94vh;
    }
 
    .btn-to-top {
