@@ -15,7 +15,7 @@
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
                      <a href="/gif-select" class="card-link">Commenter</a>
-                     <a href="#" class="card-link">Supprimer</a>
+                     <a href="#" class="card-link" v-if="userId === publication.userId ? true : false">Supprimer</a>
                   </div>
                </template>
             </b-card>
@@ -29,6 +29,7 @@
 
 <script>
    import axios from 'axios';
+   import { mapState } from 'vuex';
 
    export default {
       name: 'Main',
@@ -37,6 +38,9 @@
             showGoToTopButton: false,
             publications: null
          }
+      },
+      computed: {
+         ...mapState(['userId'])
       },
       methods: {
          goToTop() {
