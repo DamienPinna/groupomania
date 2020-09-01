@@ -7,7 +7,7 @@
             </header>
             <div class="d-flex justify-content-between align-items-center">
                <div>Publié par : {{ publication.login }}</div>
-               <div>{{ publication.date}}</div>
+               <div>{{ publication.date }}</div>
             </div>
             
             <b-card no-body>
@@ -47,7 +47,7 @@
          }
       },
       computed: {
-         ...mapState(['userId'])
+         ...mapState(['userId', 'tokenFromStorage'])
       },
       methods: {
          goToTop() {
@@ -60,10 +60,8 @@
          },
 
          getAllPublications() {
-            const tokenFromStorage = localStorage.getItem('token');
-
             axios.get('http://localhost:3000/api/publications', {
-               headers: {'Authorization':'Bearer ' + tokenFromStorage}
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => this.publications = response.data)
             .catch(error => console.error(error));
