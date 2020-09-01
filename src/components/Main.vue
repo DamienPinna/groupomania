@@ -2,20 +2,27 @@
    <div class="pb-5 main">
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
-            <header class="d-flex justify-content-between align-items-center">
+            <header>
                <h4>{{ publication.title }}</h4>
-               <div>{{ publication.date}}</div>
             </header>
-            <div>Publié par : {{ publication.login }}</div>
+            <div class="d-flex justify-content-between align-items-center">
+               <div>Publié par : {{ publication.login }}</div>
+               <div>{{ publication.date}}</div>
+            </div>
+            
             <b-card no-body>
-               <div class="mx-auto">
+               <a href="/gif-select" class="mx-auto">
                   <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
-               </div>
+               </a>
 
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                     <a href="/gif-select" class="card-link">Commenter</a>
-                     <a href="#" class="card-link" v-if="userId === publication.userId ? true : false">Supprimer</a>
+                     <b-button href="/gif-select" variant="info" size="sm">Commenter</b-button>
+                     
+                     <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
+                        <b-dropdown-item>Modifier</b-dropdown-item>
+                        <b-dropdown-item>Supprimer</b-dropdown-item>
+                     </b-dropdown>
                   </div>
                </template>
             </b-card>
