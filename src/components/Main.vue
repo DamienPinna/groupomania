@@ -3,7 +3,12 @@
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header>
-               <h4>{{ publication.title }}</h4>
+               <h4 v-if="showToInputTitle !== publication.postId ? true : false">{{ publication.title }}</h4>
+               <b-form inline v-if="showToInputTitle === publication.postId ? true : false">
+                  <label class="sr-only" for="modifyPublication">titre</label>
+                  <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :value="publication.title"></b-input>
+                  <b-button variant="primary">Save</b-button>
+               </b-form>
             </header>
             <div class="d-flex justify-content-between align-items-center">
                <div>Publié par : {{ publication.login }}</div>
@@ -20,7 +25,7 @@
                      <b-button href="/gif-select" variant="info" size="sm">Commenter</b-button>
                      
                      <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
-                        <b-dropdown-item>Modifier</b-dropdown-item>
+                        <b-dropdown-item @click="modifyPublication(publication.postId)">Modifier</b-dropdown-item>
                         <b-dropdown-item>Supprimer</b-dropdown-item>
                      </b-dropdown>
                   </div>
@@ -42,7 +47,8 @@
       name: 'Main',
       data() {
          return {
-            showGoToTopButton: false,
+            showGoToTopButton : false,
+            showToInputTitle: 0,
             publications: null
          }
       },
@@ -65,6 +71,10 @@
             })
             .then(response => this.publications = response.data)
             .catch(error => console.error(error));
+         },
+
+         modifyPublication(postId) {
+            this.showToInputTitle = postId;
          }
       },
       mounted() {
