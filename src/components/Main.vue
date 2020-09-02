@@ -6,8 +6,8 @@
                <h4 v-if="showToInputTitle !== publication.postId ? true : false">{{ publication.title }}</h4>
                <b-form inline v-if="showToInputTitle === publication.postId ? true : false">
                   <label class="sr-only" for="modifyPublication">titre</label>
-                  <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :value="publication.title"></b-input>
-                  <b-button variant="primary">Save</b-button>
+                  <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
+                  <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
                </b-form>
             </header>
             <div class="d-flex justify-content-between align-items-center">
@@ -25,7 +25,7 @@
                      <b-button href="/gif-select" variant="info" size="sm">Commenter</b-button>
                      
                      <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
-                        <b-dropdown-item @click="modifyPublication(publication.postId)">Modifier</b-dropdown-item>
+                        <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
                         <b-dropdown-item>Supprimer</b-dropdown-item>
                      </b-dropdown>
                   </div>
@@ -48,8 +48,9 @@
       data() {
          return {
             showGoToTopButton : false,
-            showToInputTitle: 0,
-            publications: null
+            showToInputTitle: -1,
+            publications: null,
+            newTitle: ''
          }
       },
       computed: {
@@ -73,8 +74,20 @@
             .catch(error => console.error(error));
          },
 
-         modifyPublication(postId) {
+         showInputforModification(postId) {
             this.showToInputTitle = postId;
+         },
+
+         modifyPublication(postId, newTitle) {
+            const formData = { title: newTitle }
+            axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response.data);
+               this.showToInputTitle = -1;
+            })
+            .catch(error => console.error(error))
          }
       },
       mounted() {
