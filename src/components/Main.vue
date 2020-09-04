@@ -22,7 +22,7 @@
 
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                     <b-button href="/gif-select" variant="info" size="sm">Commenter</b-button>
+                     <b-button href="/gif-select" variant="info" size="sm">Commentaires</b-button>
                      
                      <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
