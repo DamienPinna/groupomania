@@ -6,14 +6,14 @@ const db = require('../db');
 exports.createPublication = (req, res) => {
    console.log(req.body)
    console.log(req.file)
-   // db.connection();
-   // db.instance.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
-   //                   VALUES ("${req.body.title}",NOW(),"${req.body.gifUrl}","${req.body.userId}");`,
-   // function (error, results, fields) {
-   //    if (error) throw error;
-   //    res.status(200).json({message: 'Publication enregistrée'});
-   //    db.disconnection();
-   // });
+   db.connection();
+   db.instance.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
+                     VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
+   function (error, results, fields) {
+      if (error) throw error;
+      res.status(200).json({message: 'Publication enregistrée'});
+      db.disconnection();
+   });
 };
 
 /**

@@ -48,7 +48,10 @@
                   'content-type': 'multipart/form-data'
                }
             })
-            .then(response => console.log(response))
+            .then(response => {
+               console.log(response);
+               this.$router.push('/home');
+            })
             .catch(error => console.error(error))
             console.log("Soumission du formulaire");
          },
