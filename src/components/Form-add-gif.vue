@@ -41,6 +41,8 @@
             formData.append('title', title);
             formData.append('image', file);
             formData.append('userId', this.userId);
+
+            console.log("Soumission du formulaire");
             
             axios.post('http://localhost:3000/api/publications', formData, {
                headers: {
@@ -49,11 +51,10 @@
                }
             })
             .then(response => {
-               console.log(response);
+               console.log(response.data);
                this.$router.push('/home');
             })
             .catch(error => console.error(error))
-            console.log("Soumission du formulaire");
          },
 
          onReset() {

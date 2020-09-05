@@ -1,11 +1,10 @@
+const fs = require('fs');
 const db = require('../db');
 
 /**
  * Créé une publication.
  */
 exports.createPublication = (req, res) => {
-   console.log(req.body)
-   console.log(req.file)
    db.connection();
    db.instance.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
                      VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
@@ -36,12 +35,21 @@ exports.modifyPublication = (req, res) => {
  */
 exports.deletePublication = (req, res) => {
    db.connection();
-   db.instance.query(`DELETE FROM post
+   db.instance.query(`SELECT gifUrl
+                     FROM post
                      WHERE postId = ${req.params.id};`,
    function (error, results, fields) {
       if (error) throw error;
-      res.status(200).json({message: 'Publication supprimée'});
-      db.disconnection();
+      const filename = results[0].gifUrl.split('/images/')[1];
+      fs.unlink(`images/${filename}`, () => {
+         db.instance.query(`DELETE FROM post
+                           WHERE postId = ${req.params.id};`,
+         function (error, results, fields) {
+            if (error) throw error;
+            res.status(200).json({message: 'Publication supprimée'});
+            db.disconnection();
+         });
+      });
    });
 };
 

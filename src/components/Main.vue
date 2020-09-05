@@ -26,7 +26,7 @@
                      
                      <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
-                        <b-dropdown-item>Supprimer</b-dropdown-item>
+                        <b-dropdown-item @click="deletePublication(publication.postId)">Supprimer</b-dropdown-item>
                      </b-dropdown>
                   </div>
                </template>
@@ -86,8 +86,20 @@
             .then(response => {
                console.log(response.data);
                this.showToInputTitle = -1;
+               this.getAllPublications();
             })
-            .catch(error => console.error(error))
+            .catch(error => console.error(error));
+         },
+
+         deletePublication(postId) {
+            axios.delete(`http://localhost:3000/api/publications/${postId}`, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response.data);
+               this.getAllPublications();
+            })
+            .catch(error => console.error(error));
          }
       },
       mounted() {
