@@ -8,28 +8,29 @@
             <div>Publié par : {{ publication.login }}</div>
             <div>{{ publication.date }}</div>
          </div>
-   
+
          <b-card no-body>
-            <div class="mx-auto">
+            <div class="mx-auto" v-if="publication.gifUrl">
                <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
             </div>
+            
+            <template v-for="comment in comments" >
+               <b-list-group flush :key="comment.commentId" v-if="comment">
+                  <b-card>
+                     <b-card-title>Commenté le {{ comment.date }}</b-card-title>
+                     <b-card-sub-title class="mb-2">Par {{ comment.login }}</b-card-sub-title>
+                     <b-card-text>
+                        Some quick example text to build on the card title and make up the bulk of the card's
+                        content.
+                     </b-card-text>
 
-            <b-list-group flush>
-               <b-card>
-                  <b-card-title>Commenté le 10/01/2020</b-card-title>
-                  <b-card-sub-title class="mb-2">Damien</b-card-sub-title>
-                  <b-card-text>
-                     Some quick example text to build on the card title and make up the bulk of the card's
-                     content.
-                  </b-card-text>
-
-                  <div class="d-flex justify-content-between">
-                     <a href="#" class="card-link">Modifier</a>
-                     <b-link href="#" class="card-link">Supprimer</b-link>
-                  </div> 
-               </b-card>
-            </b-list-group>
-
+                     <div class="d-flex justify-content-between">
+                        <a href="#" class="card-link">Modifier</a>
+                        <b-link href="#" class="card-link">Supprimer</b-link>
+                     </div> 
+                  </b-card>
+               </b-list-group>
+            </template>
          </b-card>
       </div>
    </div>
@@ -44,7 +45,7 @@
       data() {
          return {
             publication: Object,
-            comments: null,
+            comments: Array,
          }
       },
       computed: {
@@ -63,13 +64,13 @@
             axios.get(`http://localhost:3000/api/comments/${postId}`, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
-            .then(response => {this.comments = response.data; console.log(response.data);})
+            .then(response => this.comments = response.data)
             .catch(error => console.error(error));
          }
       },
-      mounted() {
+      async mounted() {
          const postId = window.location.pathname.substring(12);
-         this.getOnePublication(postId);
+         await this.getOnePublication(postId);
          this.getAllCommentsFromOnePublication(postId);
       }
    }

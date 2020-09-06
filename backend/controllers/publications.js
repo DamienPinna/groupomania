@@ -68,7 +68,7 @@ exports.getOnePublication = (req, res) => {
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json(results);
-      // db.disconnection();
+      // La fonction getAllCommentsFromOnePublication va être appelée, il faut garder la connection à la DB.
    });
 };
 
