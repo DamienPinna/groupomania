@@ -68,7 +68,7 @@ exports.getOnePublication = (req, res) => {
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json(results);
-      db.disconnection();
+      // db.disconnection();
    });
 };
 

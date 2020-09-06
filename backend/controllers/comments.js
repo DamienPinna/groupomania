@@ -47,7 +47,7 @@ exports.deleteComment = (req, res) => {
  * Cherche les commentaires d'une publication.
  */
 exports.getAllCommentsFromOnePublication = (req, res) => {
-   db.connection();
+   // db.connection();
    db.instance.query(`SELECT commentId, comment.userId, login, postId, content, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date 
                      FROM comment
                      INNER JOIN user

@@ -16,7 +16,6 @@
 
             <b-list-group flush>
                <b-card>
-                  <!-- <b-card-title>Publié le 10/01/2020</b-card-title> -->
                   <b-card-title>Commenté le 10/01/2020</b-card-title>
                   <b-card-sub-title class="mb-2">Damien</b-card-sub-title>
                   <b-card-text>
@@ -45,7 +44,7 @@
       data() {
          return {
             publication: Object,
-            postId: Number
+            comments: null,
          }
       },
       computed: {
@@ -58,12 +57,20 @@
             })
             .then(response => this.publication = response.data[0])
             .catch(error => console.error(error));
+         },
+
+         getAllCommentsFromOnePublication(postId) {
+            axios.get(`http://localhost:3000/api/comments/${postId}`, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {this.comments = response.data; console.log(response.data);})
+            .catch(error => console.error(error));
          }
       },
       mounted() {
          const postId = window.location.pathname.substring(12);
-         this.postId = postId;
          this.getOnePublication(postId);
+         this.getAllCommentsFromOnePublication(postId);
       }
    }
 </script>
