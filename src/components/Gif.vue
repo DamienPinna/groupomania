@@ -17,15 +17,14 @@
             <b-card-body class="py-3">
                <b-button variant="info" size="sm">Commenter</b-button>
             </b-card-body>
-            
-            <template v-for="comment in comments" >
-               <b-list-group flush :key="comment.commentId" v-if="comment">
-                  <b-card>
+
+            <b-list-group flush>
+               <template v-for="comment in comments" >
+                  <b-card :key="comment.commentId" v-if="comment">
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
                      <b-card-sub-title class="mb-2">Par {{ comment.login }}</b-card-sub-title>
                      <b-card-text>
-                        Some quick example text to build on the card title and make up the bulk of the card's
-                        content.
+                        {{ comment.content }}
                      </b-card-text>
 
                      <div class="d-flex justify-content-between">
@@ -33,8 +32,8 @@
                         <b-link href="#" class="card-link">Supprimer</b-link>
                      </div> 
                   </b-card>
-               </b-list-group>
-            </template>
+               </template>
+            </b-list-group>
          </b-card>
       </div>
    </div>
