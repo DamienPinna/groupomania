@@ -48,8 +48,10 @@ exports.deleteComment = (req, res) => {
  */
 exports.getAllCommentsFromOnePublication = (req, res) => {
    db.connection();
-   db.instance.query(`SELECT * 
+   db.instance.query(`SELECT commentId, comment.userId, login, postId, content, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date 
                      FROM comment
+                     INNER JOIN user
+                     ON comment.userId = user.userId
                      WHERE postId = ${req.params.id};`,
    function (error, results, fields) {
       if (error) throw error;
