@@ -13,6 +13,10 @@
             <div class="mx-auto" v-if="publication.gifUrl">
                <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
             </div>
+
+            <b-card-body class="py-3">
+               <b-button variant="info" size="sm">Commenter</b-button>
+            </b-card-body>
             
             <template v-for="comment in comments" >
                <b-list-group flush :key="comment.commentId" v-if="comment">
