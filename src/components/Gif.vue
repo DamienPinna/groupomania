@@ -2,13 +2,16 @@
    <div class="main">
       <div class="mx-auto pt-5 item">
          <header class="d-flex justify-content-between align-items-center">
-            <h4>Titre</h4>
-            <div>10/10/2020</div>
+            <h4>{{ publication.title }}</h4>
          </header>
-         <div>Publié par : Damien</div>
+         <div class="d-flex justify-content-between align-items-center">
+            <div>Publié par : {{ publication.login }}</div>
+            <div>{{ publication.date }}</div>
+         </div>
+   
          <b-card no-body>
             <div class="mx-auto">
-               <b-card-img src="https://placekitten.com/300/300" img-alt="Image animée"></b-card-img>
+               <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
             </div>
 
             <b-list-group flush>
@@ -34,8 +37,34 @@
 </template>
 
 <script>
+   import axios from 'axios';
+   import { mapState } from 'vuex';
+
    export default {
-      name: 'Gif'
+      name: 'Gif',
+      data() {
+         return {
+            publication: Object,
+            postId: Number
+         }
+      },
+      computed: {
+         ...mapState(['userId', 'tokenFromStorage'])
+      },
+      methods: {
+         getOnePublication(postId) {
+            axios.get(`http://localhost:3000/api/publications/${postId}`, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => this.publication = response.data[0])
+            .catch(error => console.error(error));
+         }
+      },
+      mounted() {
+         const postId = window.location.pathname.substring(12);
+         this.postId = postId;
+         this.getOnePublication(postId);
+      }
    }
 </script>
 

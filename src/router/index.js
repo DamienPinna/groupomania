@@ -19,7 +19,7 @@ const routes = [
    {path: '/signup', name: 'Signup', component: Signup},
    {path: '/home', name: 'Home', component: Home, beforeEnter: guardMyRoute},
    {path: '/add-gif', name: 'Add-gif', component: AddGif, beforeEnter: guardMyRoute},
-   {path: '/gif-select', name: 'gif-select', component: GifSelect, beforeEnter: guardMyRoute}
+   {path: '/gif-select/:id', name: 'gif-select', component: GifSelect, beforeEnter: guardMyRoute}
 ]
 
 const router = new VueRouter({

@@ -58,7 +58,7 @@ exports.deletePublication = (req, res) => {
  */
 exports.getOnePublication = (req, res) => {
    db.connection();
-   db.instance.query(`SELECT postId, dateStamp, title, gifUrl, post.userId, login, role 
+   db.instance.query(`SELECT postId, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date, title, gifUrl, post.userId, login, role 
                      FROM post
                      INNER JOIN user
                      ON post.userId = user.userId

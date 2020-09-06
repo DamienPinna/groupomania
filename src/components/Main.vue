@@ -16,13 +16,13 @@
             </div>
             
             <b-card no-body>
-               <a href="/gif-select" class="mx-auto">
+               <a @click="goToUniqueGif(publication.postId)" class="mx-auto">
                   <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
                </a>
 
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                     <b-button href="/gif-select" variant="info" size="sm">Commentaires</b-button>
+                     <b-button variant="info" size="sm" @click="goToUniqueGif(publication.postId)">Commentaires</b-button>
                      
                      <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
@@ -50,7 +50,7 @@
             showGoToTopButton : false,
             showToInputTitle: -1,
             publications: null,
-            newTitle: ''
+            newTitle: '',
          }
       },
       computed: {
@@ -100,6 +100,10 @@
                this.getAllPublications();
             })
             .catch(error => console.error(error));
+         },
+
+         goToUniqueGif(postId) {
+            this.$router.push(`/gif-select/${postId}`)
          }
       },
       mounted() {
