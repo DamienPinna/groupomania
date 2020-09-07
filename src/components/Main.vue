@@ -3,8 +3,8 @@
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header>
-               <h4 v-if="showToInputTitle !== publication.postId ? true : false">{{ publication.title }}</h4>
-               <b-form inline v-if="showToInputTitle === publication.postId ? true : false">
+               <h4 v-if="showToInputTitle !== publication.postId">{{ publication.title }}</h4>
+               <b-form inline v-if="showToInputTitle === publication.postId">
                   <label class="sr-only" for="modifyPublication">titre</label>
                   <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
                   <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
@@ -24,7 +24,7 @@
                   <div class="d-flex justify-content-between">
                      <b-button variant="info" size="sm" @click="goToUniqueGif(publication.postId)">Commentaires</b-button>
                      
-                     <b-dropdown v-if="userId === publication.userId ? true : false" variant="info" size="sm" right>
+                     <b-dropdown v-if="userId === publication.userId" variant="info" size="sm" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
                         <b-dropdown-item @click="deletePublication(publication.postId)">Supprimer</b-dropdown-item>
                      </b-dropdown>
@@ -79,7 +79,7 @@
          },
 
          modifyPublication(postId, newTitle) {
-            const formData = { title: newTitle }
+            const formData = { title: newTitle };
             axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })

@@ -19,12 +19,18 @@
                   <b-card :key="comment.commentId" v-if="comment">
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
                      <b-card-sub-title class="mb-2">Par {{ comment.login }}</b-card-sub-title>
-                     <b-card-text>
+
+                     <b-card-text v-if="showToInputComment !== comment.commentId">
                         {{ comment.content }}
                      </b-card-text>
 
+                     <b-form-textarea v-if="showToInputComment === comment.commentId" :placeholder="comment.content" v-model="newContent" rows="3" max-rows="5" class="mb-3"> 
+                        {{ comment.content }}
+                     </b-form-textarea>
+
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId">
-                        <b-button variant="secondary" size="sm">Modifier</b-button>
+                        <b-button v-if="showToInputComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
+                        <b-button v-if="showToInputComment === comment.commentId" @click="modifyComment(comment.commentId, newContent)" variant="success" size="sm">Valider</b-button>
                         <b-button variant="danger" size="sm">Supprimer</b-button>
                      </div> 
                   </b-card>
@@ -51,6 +57,9 @@
          return {
             publication: Object,
             comments: Array,
+            showToInputComment: -1,
+            postId: Number,
+            newContent: ''
          }
       },
       computed: {
@@ -71,16 +80,29 @@
             })
             .then(response => this.comments = response.data)
             .catch(error => console.error(error));
+         },
+         showInputforModification(commentId) {
+            this.showToInputComment = commentId;
+         },
+
+         modifyComment(commentId, newContent) {
+            const formData = { content: newContent };
+            axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response.data);
+               this.showToInputComment = -1;
+               this.getAllCommentsFromOnePublication(this.postId);
+            })
+            .catch(error => console.error(error));
          }
       },
       async mounted() {
          const postId = window.location.pathname.substring(12);
-         try {
-            await this.getOnePublication(postId);
-            this.getAllCommentsFromOnePublication(postId);
-         } catch(error) {
-            console.error(error);
-         }
+         this.postId = postId;
+         await this.getOnePublication(postId);
+         this.getAllCommentsFromOnePublication(postId);
       }
    }
 </script>
