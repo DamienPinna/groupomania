@@ -23,7 +23,7 @@
                         {{ comment.content }}
                      </b-card-text>
 
-                     <div class="d-flex justify-content-between">
+                     <div class="d-flex justify-content-between" v-if="comment.userId === userId">
                         <b-button variant="secondary" size="sm">Modifier</b-button>
                         <b-button variant="danger" size="sm">Supprimer</b-button>
                      </div> 
