@@ -52,7 +52,8 @@ exports.getAllCommentsFromOnePublication = (req, res) => {
                      FROM comment
                      INNER JOIN user
                      ON comment.userId = user.userId
-                     WHERE postId = ${req.params.id};`,
+                     WHERE postId = ${req.params.id}
+                     ORDER BY commentId;`,
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json(results);

@@ -14,10 +14,6 @@
                <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
             </div>
 
-            <b-card-body class="py-3">
-               <b-button variant="info" size="sm">Commenter</b-button>
-            </b-card-body>
-
             <b-list-group flush>
                <template v-for="comment in comments" >
                   <b-card :key="comment.commentId" v-if="comment">
@@ -28,12 +24,18 @@
                      </b-card-text>
 
                      <div class="d-flex justify-content-between">
-                        <a href="#" class="card-link">Modifier</a>
-                        <b-link href="#" class="card-link">Supprimer</b-link>
+                        <b-button variant="secondary" size="sm">Modifier</b-button>
+                        <b-button variant="danger" size="sm">Supprimer</b-button>
                      </div> 
                   </b-card>
                </template>
             </b-list-group>
+
+            <template v-slot:footer>
+                  <div class="d-flex justify-content-between">
+                     <b-button variant="info" size="sm">Commenter</b-button>
+                  </div>
+               </template>
          </b-card>
       </div>
    </div>
@@ -73,8 +75,12 @@
       },
       async mounted() {
          const postId = window.location.pathname.substring(12);
-         await this.getOnePublication(postId);
-         this.getAllCommentsFromOnePublication(postId);
+         try {
+            await this.getOnePublication(postId);
+            this.getAllCommentsFromOnePublication(postId);
+         } catch(error) {
+            console.error(error);
+         }
       }
    }
 </script>

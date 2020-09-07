@@ -82,7 +82,8 @@ exports.getAllPublications = (req, res) => {
                      INNER JOIN user
                      ON post.userId = user.userId
                      INNER JOIN role
-                     ON user.roleId = role.roleId;`,
+                     ON user.roleId = role.roleId
+                     ORDER BY postId;`,
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json(results);
