@@ -1,6 +1,6 @@
 <template>
    <div class="main">
-      <div class="mx-auto pt-5 item">
+      <div class="mx-auto py-5 item">
          <header class="d-flex justify-content-between align-items-center">
             <h4>{{ publication.title }}</h4>
          </header>
@@ -51,6 +51,7 @@
             </template>
          </b-card>
       </div>
+      <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
    </div>
 </template>
 
@@ -62,6 +63,7 @@
       name: 'Gif',
       data() {
          return {
+            showGoToTopButton : false,
             publication: Object,
             comments: Array,
             showInputToModifyComment: -1,
@@ -75,6 +77,15 @@
          ...mapState(['userId', 'tokenFromStorage'])
       },
       methods: {
+         goToTop() {
+            window.scrollTo(0,0);
+         },
+
+         checkScroll() {
+            if (window.scrollY > 500) this.showGoToTopButton = true;
+            else this.showGoToTopButton = false; 
+         },
+
          getOnePublication(postId) {
             axios.get(`http://localhost:3000/api/publications/${postId}`, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
@@ -96,6 +107,7 @@
 
          modifyComment(commentId, updatingComment) {
             const formData = { content: updatingComment };
+
             axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
@@ -130,10 +142,14 @@
          }
       },
       async mounted() {
+         window.addEventListener('scroll', this.checkScroll);
          const postId = window.location.pathname.substring(12);
          this.postId = postId;
          await this.getOnePublication(postId);
          this.getAllCommentsFromOnePublication(postId);
+      },
+      destroy() {
+         window.removeEventListener('scroll', this.checkScroll);
       }
    }
 </script>
@@ -143,6 +159,14 @@
       background-color: #d3dbdf;
       margin-top: 56px;
       min-height: 94vh;
+   }
+
+   .btn-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      width: 50px;
+      cursor: pointer;
    }
    
    .item {
@@ -157,6 +181,12 @@
    @media screen and (max-width: 360px) {
       .item {
          width: 100%;
+      }
+   }
+
+   @media screen and (max-width: 550px) {
+      .btn-to-top {
+         display: none;
       }
    }
 </style>
