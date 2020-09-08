@@ -5,12 +5,12 @@ const db = require('../db');
  */
 exports.createComment = (req, res) => {
    db.connection();
-   db.instance.query(`INSERT INTO comment (userId,postId,content)
-                     VALUES ("${req.body.userId}","${req.body.postId}","${req.body.content}");`,
+   db.instance.query(`INSERT INTO comment (userId,postId,content,dateStamp)
+                     VALUES (${req.body.userId},${req.body.postId},"${req.body.content}",NOW());`,
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json({message: 'Commentaire enregistré'});
-      db.disconnection();
+      // db.disconnection();
    });
 };
 

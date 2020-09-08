@@ -20,28 +20,35 @@
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
                      <b-card-sub-title class="mb-2">Par {{ comment.login }}</b-card-sub-title>
 
-                     <b-card-text v-if="showToInputComment !== comment.commentId">
+                     <b-card-text v-if="showInputToModifyComment !== comment.commentId">
                         {{ comment.content }}
                      </b-card-text>
 
-                     <b-form-textarea v-if="showToInputComment === comment.commentId" :placeholder="comment.content" v-model="newContent" rows="3" max-rows="5" class="mb-3"> 
+                     <b-form-textarea v-if="showInputToModifyComment === comment.commentId" :placeholder="comment.content" v-model="updatingComment" rows="3" max-rows="5" class="mb-3"> 
                         {{ comment.content }}
                      </b-form-textarea>
 
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId">
-                        <b-button v-if="showToInputComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
-                        <b-button v-if="showToInputComment === comment.commentId" @click="modifyComment(comment.commentId, newContent)" variant="success" size="sm">Valider</b-button>
+                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
+                        <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId, updatingComment)" variant="success" size="sm">Valider</b-button>
                         <b-button variant="danger" size="sm">Supprimer</b-button>
                      </div> 
                   </b-card>
                </template>
             </b-list-group>
 
+            <b-card v-if="showInputToCreatedComment">
+               <b-form-textarea v-model="newComment" rows="3" max-rows="5">
+                  <!-- Nouveau commentaire à ajouter -->
+               </b-form-textarea>
+            </b-card>
+
             <template v-slot:footer>
-                  <div class="d-flex justify-content-between">
-                     <b-button variant="info" size="sm">Commenter</b-button>
-                  </div>
-               </template>
+               <div class="d-flex justify-content-between">
+                  <b-button v-if="!showInputToCreatedComment" variant="info" size="sm" @click="showInputForCreate">Commenter</b-button>
+                  <b-button v-if="showInputToCreatedComment" variant="success" size="sm" @click="createComment">Valider</b-button>
+               </div>
+            </template>
          </b-card>
       </div>
    </div>
@@ -57,9 +64,11 @@
          return {
             publication: Object,
             comments: Array,
-            showToInputComment: -1,
+            showInputToModifyComment: -1,
+            showInputToCreatedComment: false,
             postId: Number,
-            newContent: ''
+            updatingComment: '',
+            newComment: ''
          }
       },
       computed: {
@@ -82,20 +91,42 @@
             .catch(error => console.error(error));
          },
          showInputforModification(commentId) {
-            this.showToInputComment = commentId;
+            this.showInputToModifyComment = commentId;
          },
 
-         modifyComment(commentId, newContent) {
-            const formData = { content: newContent };
+         modifyComment(commentId, updatingComment) {
+            const formData = { content: updatingComment };
             axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => {
                console.log(response.data);
-               this.showToInputComment = -1;
+               this.showInputToModifyComment = -1;
                this.getAllCommentsFromOnePublication(this.postId);
             })
             .catch(error => console.error(error));
+         },
+
+         showInputForCreate() {
+            this.showInputToCreatedComment = true;
+         },
+
+         createComment() {
+            const formData = {
+               userId: this.userId,
+               postId: this.postId,
+               content: this.newComment
+            };
+
+            axios.post('http://localhost:3000/api/comments', formData, {
+               headers: {'Authorization': 'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response.data);
+               this.showInputToCreatedComment = false;
+               this.getAllCommentsFromOnePublication(this.postId);
+            })
+            .catch(error => console.log(error)); 
          }
       },
       async mounted() {
@@ -110,8 +141,8 @@
 <style scoped>
    .main {
       background-color: #d3dbdf;
-      margin-top: 56px;;
-      height: 94vh;
+      margin-top: 56px;
+      min-height: 94vh;
    }
    
    .item {

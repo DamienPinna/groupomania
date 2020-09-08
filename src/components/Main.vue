@@ -3,8 +3,8 @@
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header>
-               <h4 v-if="showToInputTitle !== publication.postId">{{ publication.title }}</h4>
-               <b-form inline v-if="showToInputTitle === publication.postId">
+               <h4 v-if="showInputTitle !== publication.postId">{{ publication.title }}</h4>
+               <b-form inline v-if="showInputTitle === publication.postId">
                   <label class="sr-only" for="modifyPublication">titre</label>
                   <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
                   <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
@@ -48,7 +48,7 @@
       data() {
          return {
             showGoToTopButton : false,
-            showToInputTitle: -1,
+            showInputTitle: -1,
             publications: null,
             newTitle: '',
          }
@@ -75,7 +75,7 @@
          },
 
          showInputforModification(postId) {
-            this.showToInputTitle = postId;
+            this.showInputTitle = postId;
          },
 
          modifyPublication(postId, newTitle) {
@@ -85,7 +85,7 @@
             })
             .then(response => {
                console.log(response.data);
-               this.showToInputTitle = -1;
+               this.showInputTitle = -1;
                this.getAllPublications();
             })
             .catch(error => console.error(error));
