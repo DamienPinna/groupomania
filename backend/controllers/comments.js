@@ -10,7 +10,6 @@ exports.createComment = (req, res) => {
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json({message: 'Commentaire enregistré'});
-      // db.disconnection();
    });
 };
 
@@ -46,7 +45,7 @@ exports.deleteComment = (req, res) => {
  * Cherche les commentaires d'une publication.
  */
 exports.getAllCommentsFromOnePublication = (req, res) => {
-   // Connection à la DB établit via la fonction getOnePublication ou modifyComment.
+   // Connection à la DB établit via la fonction getOnePublication ou cratedComment ou modifyComment.
    db.instance.query(`SELECT commentId, comment.userId, login, postId, content, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date 
                      FROM comment
                      INNER JOIN user

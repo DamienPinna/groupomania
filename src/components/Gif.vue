@@ -52,6 +52,7 @@
          </b-card>
       </div>
       <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
+      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom" v-if="comments.length > 10">
    </div>
 </template>
 
@@ -78,7 +79,19 @@
       },
       methods: {
          goToTop() {
-            window.scrollTo(0,0);
+            window.scrollTo({
+               top: 0,
+               left: 0,
+               behavior: 'smooth'
+            });
+         },
+
+         goToBottom() {
+            window.scrollTo({
+               top: document.documentElement.scrollHeight,
+               left: 0,
+               behavior: 'smooth'
+            });
          },
 
          checkScroll() {
@@ -121,6 +134,7 @@
 
          showInputForCreate() {
             this.showInputToCreatedComment = true;
+            setTimeout(this.goToBottom, 200);
          },
 
          createComment() {
@@ -141,12 +155,12 @@
             .catch(error => console.log(error)); 
          }
       },
-      async mounted() {
+      mounted() {
          window.addEventListener('scroll', this.checkScroll);
          const postId = window.location.pathname.substring(12);
          this.postId = postId;
-         await this.getOnePublication(postId);
-         this.getAllCommentsFromOnePublication(postId);
+         this.getOnePublication(postId);
+         setTimeout(this.getAllCommentsFromOnePublication, 1000, postId);
       },
       destroy() {
          window.removeEventListener('scroll', this.checkScroll);
@@ -168,6 +182,14 @@
       width: 50px;
       cursor: pointer;
    }
+
+   .btn-to-bottom {
+      position: fixed;
+      bottom: 20px;
+      left: 30px;
+      width: 50px;
+      cursor: pointer;
+   }
    
    .item {
       width: 300px;
@@ -186,6 +208,9 @@
 
    @media screen and (max-width: 550px) {
       .btn-to-top {
+         display: none;
+      }
+      .btn-to-bottom {
          display: none;
       }
    }
