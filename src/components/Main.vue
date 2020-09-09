@@ -35,6 +35,7 @@
       </template>
 
       <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
+      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom" v-if="publications.length > 10">
 
    </div>
 </template>
@@ -49,7 +50,7 @@
          return {
             showGoToTopButton : false,
             showInputTitle: -1,
-            publications: null,
+            publications: Array,
             newTitle: '',
          }
       },
@@ -60,6 +61,14 @@
          goToTop() {
             window.scrollTo({
                top: 0,
+               left: 0,
+               behavior: 'smooth'
+            });
+         },
+
+         goToBottom() {
+            window.scrollTo({
+               top: document.documentElement.scrollHeight,
                left: 0,
                behavior: 'smooth'
             });
@@ -138,6 +147,14 @@
       width: 50px;
       cursor: pointer;
    }
+
+   .btn-to-bottom {
+      position: fixed;
+      bottom: 20px;
+      left: 30px;
+      width: 50px;
+      cursor: pointer;
+   }
    
    .item {
       width: 300px;
@@ -146,6 +163,9 @@
 
    @media screen and (max-width: 550px) {
       .btn-to-top {
+         display: none;
+      }
+      .btn-to-bottom {
          display: none;
       }
    }
