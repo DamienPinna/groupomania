@@ -83,16 +83,20 @@
          },
 
          modifyPublication(postId, newTitle) {
-            const formData = { title: newTitle };
-            axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
-               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
-            })
-            .then(response => {
-               console.log(response.data);
+            if (newTitle !== "") {
+               const formData = { title: newTitle };
+               axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
+                  headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+               })
+               .then(response => {
+                  console.log(response.data);
+                  this.showInputTitle = -1;
+                  this.getAllPublications();
+               })
+               .catch(error => console.error(error));
+            } else {
                this.showInputTitle = -1;
-               this.getAllPublications();
-            })
-            .catch(error => console.error(error));
+            }
          },
 
          deletePublication(postId) {

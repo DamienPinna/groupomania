@@ -47,6 +47,7 @@
                <div class="d-flex justify-content-between">
                   <b-button v-if="!showInputToCreatedComment" variant="info" size="sm" @click="showInputForCreate">Commenter</b-button>
                   <b-button v-if="showInputToCreatedComment" variant="success" size="sm" @click="createComment">Valider</b-button>
+                  <b-button v-if="showInputToCreatedComment" variant="danger" size="sm" @click="cancelCreateComment">Annuler</b-button>
                </div>
             </template>
          </b-card>
@@ -119,22 +120,25 @@
          },
 
          modifyComment(commentId, updatingComment) {
-            const formData = { content: updatingComment };
-
-            axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
-               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
-            })
-            .then(response => {
-               console.log(response.data);
+            if (updatingComment !== "") {
+               const formData = { content: updatingComment };
+               axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
+                  headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+               })
+               .then(response => {
+                  console.log(response.data);
+                  this.showInputToModifyComment = -1;
+                  this.getAllCommentsFromOnePublication(this.postId);
+               })
+               .catch(error => console.error(error));
+            } else {
                this.showInputToModifyComment = -1;
-               this.getAllCommentsFromOnePublication(this.postId);
-            })
-            .catch(error => console.error(error));
+            }
          },
 
          showInputForCreate() {
             this.showInputToCreatedComment = true;
-            setTimeout(this.goToBottom, 200);
+            setTimeout(this.goToBottom, 50);
          },
 
          createComment() {
@@ -153,6 +157,10 @@
                this.getAllCommentsFromOnePublication(this.postId);
             })
             .catch(error => console.log(error)); 
+         },
+
+         cancelCreateComment() {
+            this.showInputToCreatedComment = false;
          }
       },
       mounted() {
@@ -160,7 +168,7 @@
          const postId = window.location.pathname.substring(12);
          this.postId = postId;
          this.getOnePublication(postId);
-         setTimeout(this.getAllCommentsFromOnePublication, 1000, postId);
+         setTimeout(this.getAllCommentsFromOnePublication, 100, postId);
       },
       destroy() {
          window.removeEventListener('scroll', this.checkScroll);
