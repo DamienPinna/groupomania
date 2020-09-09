@@ -9,8 +9,8 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-               <b-nav-item v-show="showAddGif" href="/add-gif"><span class="text-white">Ajouter un Gif</span></b-nav-item>
-               <b-nav-item v-show="showAllGif" href="/home"><span class="text-white">Voir tous les Gif</span></b-nav-item>
+               <b-nav-item v-show="showAddGif" @click="goToAddGifPage"><span class="text-white">Ajouter un Gif</span></b-nav-item>
+               <b-nav-item v-show="showAllGif" @click="goToHomePage"><span class="text-white">Voir tous les Gif</span></b-nav-item>
             </b-navbar-nav>
          
             <b-navbar-nav class="ml-auto">
@@ -51,7 +51,16 @@
             axios.delete(`http://localhost:3000/api/auth/${this.userId}`)
             .then(() => {this.logout()})
             .catch(error => console.error(error));
+         },
+
+         goToHomePage() {
+            this.$router.push('/home');
+         },
+   
+         goToAddGifPage() {
+            this.$router.push('/add-gif');
          }
+
       },
       created() {
          this.$store.dispatch('defineUser');

@@ -16,7 +16,7 @@
             </div>
             
             <b-card no-body>
-               <a @click="goToUniqueGif(publication.postId)" class="mx-auto">
+               <a @click="goToUniqueGif(publication.postId)" class="mx-auto pointer">
                   <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
                </a>
 
@@ -120,7 +120,7 @@
          },
 
          goToUniqueGif(postId) {
-            this.$router.push(`/gif-select/${postId}`)
+            this.$router.push(`/gif-select/${postId}`);
          }
       },
       mounted() {
@@ -159,6 +159,10 @@
    .item {
       width: 300px;
       height: auto;
+   }
+
+   .pointer {
+      cursor: pointer;
    }
 
    @media screen and (max-width: 550px) {

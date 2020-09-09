@@ -9,8 +9,8 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav class="ml-auto">
-               <b-nav-item href="/signup" :disabled="isDisabledSignup"><span class="text-white mr-3" :class="activeSignup">Inscription</span></b-nav-item>
-               <b-nav-item href="/" :disabled="isDisabledLogin"><span class="text-white" :class="activeLogin">Connexion</span></b-nav-item>
+               <b-nav-item @click="goToSignupPage" :disabled="isDisabledSignup"><span class="text-white mr-3" :class="activeSignup">Inscription</span></b-nav-item>
+               <b-nav-item @click="goToConnexionPage" :disabled="isDisabledLogin"><span class="text-white" :class="activeLogin">Connexion</span></b-nav-item>
             </b-navbar-nav>
          </b-collapse>
       </b-navbar>
@@ -32,6 +32,16 @@
          },
          activeLogin: {
             type: String
+         }
+      },
+
+      methods: {
+         goToSignupPage() {
+            this.$router.push('/signup');
+         },
+
+         goToConnexionPage() {
+            this.$router.push('/');
          }
       }
    }
