@@ -2,7 +2,10 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Inscription</h1>
 
-      <b-alert :show="weakPassword" variant="warning">Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 nombre, 1 caractère spécial et pas d'espace.</b-alert>
+      <b-alert :show="weakPassword" variant="warning">
+         <h5>Le pseudonyme est déjà utilisé et/ou le mot de passe est trop faible.</h5>
+         <p>Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 nombre, 1 caractère spécial et pas d'espace.</p>
+      </b-alert>
       <b-form @submit.prevent="signup">
          <b-form-group label="Pseudonyme :" label-for="login">
             <b-form-input type="text" id="login" v-model="form.login" required></b-form-input>
