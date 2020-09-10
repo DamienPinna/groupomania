@@ -31,7 +31,7 @@
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId">
                         <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
                         <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId, updatingComment)" variant="success" size="sm">Valider</b-button>
-                        <b-button variant="danger" size="sm">Supprimer</b-button>
+                        <b-button variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
                      </div> 
                   </b-card>
                </template>
@@ -161,6 +161,17 @@
 
          cancelCreateComment() {
             this.showInputToCreatedComment = false;
+         },
+
+         deleteComment(commentId) {
+            axios.delete(`http://localhost:3000/api/comments/${commentId}`, {
+               headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
+            })
+            .then(response => {
+               console.log(response.data);
+               this.getAllCommentsFromOnePublication(this.postId);
+            })
+            .catch(error => console.log(error));
          }
       },
       mounted() {
