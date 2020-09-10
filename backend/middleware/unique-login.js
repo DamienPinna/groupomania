@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
 
       users.forEach(user => {
          if (user.login.toLowerCase() === req.body.login.toLowerCase()) {
-            res.status(409).json({message: 'Login déjà utilisé'});
+            res.status(409).json({message: 'Ce pseudonyme est déjà utilisé !'});
             loginIsUnique = false;
             db.disconnection();
          };

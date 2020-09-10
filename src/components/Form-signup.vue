@@ -2,9 +2,8 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Inscription</h1>
 
-      <b-alert :show="weakPassword" variant="warning">
-         <h5>Le pseudonyme est déjà utilisé et/ou le mot de passe est trop faible.</h5>
-         <p>Le mot de passe doit contenir au moins 8 caractères dont 1 majuscule, 1 minuscule, 1 nombre, 1 caractère spécial et pas d'espace.</p>
+      <b-alert :show="showErrorMessage" variant="warning" class="text-center">
+         {{ errorMessage }}
       </b-alert>
       <b-form @submit.prevent="signup">
          <b-form-group label="Pseudonyme :" label-for="login">
@@ -26,7 +25,8 @@
       name: 'Form-signup',
       data() {
          return {
-            weakPassword: false,
+            showErrorMessage: false,
+            errorMessage: '',
             form: {
                login: '',
                password: ''
@@ -43,7 +43,7 @@
                localStorage.setItem('token', response.data.token);
                window.location.href = "/home";
             })
-            .catch(error => console.error(error));
+            .catch(error => console.error(error.message));
          },
 
          signup() {
@@ -53,8 +53,9 @@
             })
             .then(() => this.login())
             .catch(error => {
-               console.error(error);
-               this.weakPassword = true;
+               console.error(error.message);
+               this.errorMessage = error.response.data.message;
+               this.showErrorMessage = true;
             })
          }
       }
