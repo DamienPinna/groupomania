@@ -180,7 +180,7 @@
          const postId = window.location.pathname.substring(12);
          this.postId = postId;
          this.getOnePublication(postId);
-         setTimeout(this.getAllCommentsFromOnePublication, 100, postId);
+         this.getAllCommentsFromOnePublication(postId);
       },
       destroy() {
          window.removeEventListener('scroll', this.checkScroll);

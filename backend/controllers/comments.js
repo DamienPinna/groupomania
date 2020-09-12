@@ -1,11 +1,10 @@
-const db = require('../db');
+const pool = require('../db');
 
 /**
  * Créé un commentaire.
  */
 exports.createComment = (req, res) => {
-   db.connection();
-   db.instance.query(`INSERT INTO comment (userId,postId,content,dateStamp)
+   pool.query(`INSERT INTO comment (userId,postId,content,dateStamp)
                      VALUES (${req.body.userId},${req.body.postId},"${req.body.content}",NOW());`,
    function (error, results, fields) {
       if (error) throw error;
@@ -17,8 +16,7 @@ exports.createComment = (req, res) => {
  * Modifie un commentaire.
  */
 exports.modifyComment = (req, res) => {
-   db.connection();
-   db.instance.query(`UPDATE comment 
+   pool.query(`UPDATE comment 
                      SET content = "${req.body.content}"
                      WHERE commentId = ${req.params.id};`,
    function (error, results, fields) {
@@ -31,8 +29,7 @@ exports.modifyComment = (req, res) => {
  * Supprime un commentaire.
  */
 exports.deleteComment = (req, res) => {
-   db.connection();
-   db.instance.query(`DELETE FROM comment
+   pool.query(`DELETE FROM comment
                      WHERE commentId = ${req.params.id};`,
    function (error, results, fields) {
       if (error) throw error;
@@ -44,8 +41,7 @@ exports.deleteComment = (req, res) => {
  * Cherche les commentaires d'une publication.
  */
 exports.getAllCommentsFromOnePublication = (req, res) => {
-   // Connection à la DB établit via la fonction getOnePublication ou cratedComment ou modifyComment ou deleteComment.
-   db.instance.query(`SELECT commentId, comment.userId, login, postId, content, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date 
+   pool.query(`SELECT commentId, comment.userId, login, postId, content, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date 
                      FROM comment
                      INNER JOIN user
                      ON comment.userId = user.userId
@@ -54,6 +50,5 @@ exports.getAllCommentsFromOnePublication = (req, res) => {
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json(results);
-      db.disconnection();
    });
 };
