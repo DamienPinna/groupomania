@@ -42,8 +42,6 @@
             formData.append('image', file);
             formData.append('userId', this.userId);
 
-            console.log("Soumission du formulaire");
-            
             axios.post('http://localhost:3000/api/publications', formData, {
                headers: {
                   'Authorization': 'Bearer ' + this.tokenFromStorage,

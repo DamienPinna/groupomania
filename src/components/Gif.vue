@@ -155,6 +155,7 @@
             .then(response => {
                console.log(response.data);
                this.showInputToCreatedComment = false;
+               this.newComment = '';
                this.getAllCommentsFromOnePublication(this.postId);
             })
             .catch(error => console.log(error)); 
