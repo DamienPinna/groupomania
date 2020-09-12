@@ -24,7 +24,7 @@ exports.signup = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       pool.query(`INSERT INTO user (login,password)
-                        VALUES ("${req.body.login}","${hashedPassword}");`,
+                  VALUES ("${req.body.login}","${hashedPassword}");`,
       function (error, results, fields) {
          if (error) throw error;
          res.status(200).json({message: 'Utilisateur enregistré'});
@@ -40,10 +40,10 @@ exports.signup = async (req, res) => {
  */
 exports.login = async (req, res) => {
    pool.query(`SELECT userId, login, password, role
-                     FROM user
-                     INNER JOIN role
-                     ON user.roleId = role.roleId
-                     WHERE login="${req.body.login}";`,
+               FROM user
+               INNER JOIN role
+               ON user.roleId = role.roleId
+               WHERE login="${req.body.login}";`,
    async function (error, results, fields) {
       if (error) throw error;
       const user = JSON.parse(JSON.stringify(results)); //user est un tableau contenant un objet.
@@ -75,7 +75,7 @@ exports.login = async (req, res) => {
  */
 exports.deleteUser = (req, res) => {
    pool.query(`DELETE FROM user
-                     WHERE userId = ${req.params.id};`,
+               WHERE userId = ${req.params.id};`,
    function (error, results, fields) {
       if (error) throw error;
       res.status(200).json({message: 'Utilisateur supprimé'});
