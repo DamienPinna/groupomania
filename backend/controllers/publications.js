@@ -68,12 +68,10 @@ exports.getOnePublication = (req, res) => {
  * Cherche toutes les publications.
  */
 exports.getAllPublications = (req, res) => {
-   pool.query(`SELECT postId, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date, title, gifUrl, post.userId, login, role, (SELECT COUNT(*) FROM comment WHERE comment.postId = post.postId) AS nbComments
+   pool.query(`SELECT postId, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date, title, gifUrl, post.userId, login, (SELECT COUNT(*) FROM comment WHERE comment.postId = post.postId) AS nbComments
                      FROM post
                      INNER JOIN user
                      ON post.userId = user.userId
-                     INNER JOIN role
-                     ON user.roleId = role.roleId
                      ORDER BY postId;`,
    function (error, results, fields) {
       if (error) throw error;

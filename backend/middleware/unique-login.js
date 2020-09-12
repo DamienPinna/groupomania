@@ -1,8 +1,7 @@
-const db = require('../db');
+const pool = require('../db');
 
 module.exports = (req, res, next) => {
-   db.connection();
-   db.instance.query(`SELECT login
+   pool.query(`SELECT login
                      FROM user;`,
    function (error, results, fields) {
       if (error) throw error;
@@ -14,7 +13,6 @@ module.exports = (req, res, next) => {
          if (user.login.toLowerCase() === req.body.login.toLowerCase()) {
             res.status(409).json({message: 'Ce pseudonyme est déjà utilisé !'});
             loginIsUnique = false;
-            db.disconnection();
          };
       });
       if (loginIsUnique) next();

@@ -28,7 +28,7 @@
                         {{ comment.content }}
                      </b-form-textarea>
 
-                     <div class="d-flex justify-content-between" v-if="comment.userId === userId">
+                     <div class="d-flex justify-content-between" v-if="comment.userId === userId || role ==='admin'">
                         <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
                         <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId, updatingComment)" variant="success" size="sm">Valider</b-button>
                         <b-button variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
@@ -76,7 +76,7 @@
          }
       },
       computed: {
-         ...mapState(['userId', 'tokenFromStorage'])
+         ...mapState(['userId', 'role', 'tokenFromStorage'])
       },
       methods: {
          goToTop() {

@@ -27,7 +27,7 @@
                         <b-badge variant="light">{{publication.nbComments}} <span class="sr-only">Nombre de commentaire</span></b-badge>
                      </b-button>
                      
-                     <b-dropdown v-if="userId === publication.userId" variant="info" size="sm" right>
+                     <b-dropdown v-if="userId === publication.userId || role === 'admin'" variant="info" size="sm" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
                         <b-dropdown-item @click="deletePublication(publication.postId)">Supprimer</b-dropdown-item>
                      </b-dropdown>
@@ -58,7 +58,7 @@
          }
       },
       computed: {
-         ...mapState(['userId', 'tokenFromStorage'])
+         ...mapState(['userId', 'role', 'tokenFromStorage'])
       },
       methods: {
          goToTop() {
