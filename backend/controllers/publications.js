@@ -77,7 +77,7 @@ exports.getOnePublication = (req, res) => {
  */
 exports.getAllPublications = (req, res) => {
    db.connection();
-   db.instance.query(`SELECT postId, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date, title, gifUrl, post.userId, login, role 
+   db.instance.query(`SELECT postId, DATE_FORMAT(dateStamp, '%d/%m/%Y') AS date, title, gifUrl, post.userId, login, role, (SELECT COUNT(*) FROM comment WHERE comment.postId = post.postId) AS nbComments
                      FROM post
                      INNER JOIN user
                      ON post.userId = user.userId
