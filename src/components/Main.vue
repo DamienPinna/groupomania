@@ -4,11 +4,14 @@
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header>
                <h4 v-if="showInputTitle !== publication.postId">{{ publication.title }}</h4>
-               <b-form inline v-if="showInputTitle === publication.postId">
-                  <label class="sr-only" for="modifyPublication">titre</label>
-                  <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
-                  <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
-               </b-form>
+               <template v-if="showInputTitle === publication.postId">
+                  <b-alert :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
+                  <b-form inline>
+                     <label class="sr-only" for="modifyPublication">titre</label>
+                     <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
+                     <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
+                  </b-form>
+               </template>
             </header>
             <div class="d-flex justify-content-between align-items-center">
                <div>Publié par : {{ publication.login }}</div>
@@ -55,13 +58,15 @@
       },
       data() {
          return {
+            showErrorMessage: false,
+            errorMessage: '',
             showInputTitle: -1,
             publications: Array,
-            newTitle: '',
+            newTitle: ''
          }
       },
       computed: {
-         ...mapState(['userId', 'role', 'tokenFromStorage'])
+         ...mapState(['userId', 'role', 'tokenFromStorage', 'regex'])
       },
       methods: {
          getAllPublications() {
@@ -77,7 +82,10 @@
          },
 
          modifyPublication(postId, newTitle) {
-            if (newTitle !== "") {
+            if (this.regex.test(this.newTitle)) {
+               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.showErrorMessage = true;
+            } else if (newTitle !== "") {
                const formData = { title: newTitle };
                axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
                   headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
@@ -85,11 +93,15 @@
                .then(response => {
                   console.log(response.data);
                   this.showInputTitle = -1;
+                  this.showErrorMessage = false;
+                  this.errorMessage = '';
                   this.getAllPublications();
                })
                .catch(error => console.error(error));
             } else {
                this.showInputTitle = -1;
+               this.showErrorMessage = false;
+               this.errorMessage = '';
             }
          },
 

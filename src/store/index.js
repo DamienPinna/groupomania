@@ -8,7 +8,8 @@ export default new Vuex.Store({
          userId: '',
          login: '',
          role: '',
-         tokenFromStorage: ''
+         tokenFromStorage: '',
+         regex: /<|>|"|&/
    },
    mutations: {
       SAVE_USER_IN_STORE(state, {userId, login, role, tokenFromStorage}) {

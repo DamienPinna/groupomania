@@ -20,6 +20,7 @@
 
 <script>
    import axios from 'axios';
+   import { mapState } from 'vuex';
 
    export default {
       name: 'Form-signup',
@@ -32,6 +33,9 @@
                password: ''
             }
          }
+      },
+      computed: {
+         ...mapState(['regex'])
       },
       methods: {
          login() {
@@ -47,8 +51,7 @@
          },
 
          signup() {
-            const regex = /<|>|"|&/
-            if (regex.test(this.form.login) || regex.test(this.form.password)) {
+            if (this.regex.test(this.form.login) || this.regex.test(this.form.password)) {
                this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
                this.showErrorMessage = true;
             } else {
