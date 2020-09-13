@@ -12,8 +12,8 @@
             <div class="mt-3">Fichier sélectionné : {{ form.file ? form.file.name : '' }}</div>
          </b-form-group>
 
-         <b-button class="mr-2" type="submit" variant="info">Ajouter</b-button>
-         <b-button type="reset" variant="danger">Effacer</b-button>
+         <b-button class="mr-2" type="submit" variant="info" :disabled="form.title === '' || form.file === null">Ajouter</b-button>
+         <b-button type="reset" variant="danger" :disabled="form.title === '' && form.file === null">Effacer</b-button>
       </b-form>
    </b-container>
 </template>

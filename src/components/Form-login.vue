@@ -11,7 +11,7 @@
             <b-form-input type="password" id="password" v-model="form.password" required></b-form-input>
          </b-form-group>
 
-         <b-button class="mr-2" type="submit" variant="info">Connexion</b-button>
+         <b-button class="mr-2" type="submit" variant="info" :disabled="form.login === '' || form.password === ''">Connexion</b-button>
       </b-form>
    </b-container>
 </template>
