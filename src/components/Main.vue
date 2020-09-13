@@ -36,9 +36,6 @@
             </b-card>
          </div>
       </template>
-
-      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom" v-if="publications.length > 3">
-
    </div>
 </template>
 
@@ -59,14 +56,6 @@
          ...mapState(['userId', 'role', 'tokenFromStorage'])
       },
       methods: {
-         goToBottom() {
-            window.scrollTo({
-               top: document.documentElement.scrollHeight,
-               left: 0,
-               behavior: 'smooth'
-            });
-         },
-
          getAllPublications() {
             axios.get('http://localhost:3000/api/publications', {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
@@ -123,23 +112,7 @@
       margin-top: 56px;
       min-height: 94vh;
    }
-
-   .btn-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 30px;
-      width: 50px;
-      cursor: pointer;
-   }
-
-   .btn-to-bottom {
-      position: fixed;
-      bottom: 20px;
-      left: 30px;
-      width: 50px;
-      cursor: pointer;
-   }
-   
+ 
    .item {
       width: 300px;
       height: auto;
@@ -147,14 +120,5 @@
 
    .pointer {
       cursor: pointer;
-   }
-
-   @media screen and (max-width: 550px) {
-      .btn-to-top {
-         display: none;
-      }
-      .btn-to-bottom {
-         display: none;
-      }
    }
 </style>

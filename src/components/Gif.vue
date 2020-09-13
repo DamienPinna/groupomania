@@ -52,8 +52,6 @@
             </template>
          </b-card>
       </div>
-      <img fill="red" src="../assets/arrow-circle-up-solid.svg" alt="flèche vers le haut" @click="goToTop" variant="info" class="btn-to-top" v-if="showGoToTopButton">
-      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom" v-if="comments.length > 10">
    </div>
 </template>
 
@@ -65,7 +63,6 @@
       name: 'Gif',
       data() {
          return {
-            showGoToTopButton : false,
             publication: Object,
             comments: Array,
             showInputToModifyComment: -1,
@@ -79,27 +76,6 @@
          ...mapState(['userId', 'role', 'tokenFromStorage'])
       },
       methods: {
-         goToTop() {
-            window.scrollTo({
-               top: 0,
-               left: 0,
-               behavior: 'smooth'
-            });
-         },
-
-         goToBottom() {
-            window.scrollTo({
-               top: document.documentElement.scrollHeight,
-               left: 0,
-               behavior: 'smooth'
-            });
-         },
-
-         checkScroll() {
-            if (window.scrollY > 500) this.showGoToTopButton = true;
-            else this.showGoToTopButton = false; 
-         },
-
          getOnePublication(postId) {
             axios.get(`http://localhost:3000/api/publications/${postId}`, {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
@@ -177,14 +153,10 @@
          }
       },
       mounted() {
-         window.addEventListener('scroll', this.checkScroll);
          const postId = window.location.pathname.substring(12);
          this.postId = postId;
          this.getOnePublication(postId);
          this.getAllCommentsFromOnePublication(postId);
-      },
-      destroy() {
-         window.removeEventListener('scroll', this.checkScroll);
       }
    }
 </script>
@@ -194,22 +166,6 @@
       background-color: #d3dbdf;
       margin-top: 56px;
       min-height: 94vh;
-   }
-
-   .btn-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 30px;
-      width: 50px;
-      cursor: pointer;
-   }
-
-   .btn-to-bottom {
-      position: fixed;
-      bottom: 20px;
-      left: 30px;
-      width: 50px;
-      cursor: pointer;
    }
    
    .item {
@@ -224,15 +180,6 @@
    @media screen and (max-width: 360px) {
       .item {
          width: 100%;
-      }
-   }
-
-   @media screen and (max-width: 550px) {
-      .btn-to-top {
-         display: none;
-      }
-      .btn-to-bottom {
-         display: none;
       }
    }
 </style>
