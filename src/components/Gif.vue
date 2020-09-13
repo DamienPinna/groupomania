@@ -18,7 +18,7 @@
                <template v-for="comment in comments" >
                   <b-card :key="comment.commentId" v-if="comment">
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
-                     <b-card-sub-title class="mb-2">Par {{ comment.login }}</b-card-sub-title>
+                     <b-card-sub-title class="mb-2">Par {{ comment.login ? comment.login : "profil supprimé"}}</b-card-sub-title>
 
                      <b-card-text v-if="showInputToModifyComment !== comment.commentId">
                         {{ comment.content }}
