@@ -47,16 +47,22 @@
          },
 
          signup() {
-            axios.post('http://localhost:3000/api/auth/signup', {
-               login: this.form.login,
-               password: this.form.password
-            })
-            .then(() => this.login())
-            .catch(error => {
-               console.error(error.message);
-               this.errorMessage = error.response.data.message;
+            const regex = /<|>|"|&/
+            if (regex.test(this.form.login) || regex.test(this.form.password)) {
+               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
                this.showErrorMessage = true;
-            })
+            } else {
+               axios.post('http://localhost:3000/api/auth/signup', {
+                  login: this.form.login,
+                  password: this.form.password
+               })
+               .then(() => this.login())
+               .catch(error => {
+                  console.error(error.message);
+                  this.errorMessage = error.response.data.message;
+                  this.showErrorMessage = true;
+               })
+            }
          }
       }
    }

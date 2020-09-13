@@ -47,10 +47,10 @@ exports.login = async (req, res) => {
    async function (error, results, fields) {
       if (error) throw error;
       const user = JSON.parse(JSON.stringify(results)); //user est un tableau contenant un objet.
-      if (user.length === 0) return res.status(400).json({error: 'Login et/ou mot de passe incorrect !'});
+      if (user.length === 0) return res.status(400).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
       try {
          const valid = await bcrypt.compare(req.body.password, user[0].password);
-         if(!valid) return res.status(400).json({error: 'Login et/ou mot de passe incorrect !'});
+         if(!valid) return res.status(400).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
          res.status(200).json({
             userId: user[0].userId,
             token: jwt.sign(
