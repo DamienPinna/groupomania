@@ -7,8 +7,8 @@
 </template>
 
 <script>
-   import Navbar from '../components/Navbar'
-   import FormAddGif from '../components/Form-add-gif.vue'
+   import Navbar from '../components/Navbar';
+   import FormAddGif from '../components/Form-add-gif.vue';
 
    export default {
       name: 'Add-gif',

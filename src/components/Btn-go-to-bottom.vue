@@ -1,6 +1,6 @@
 <template>
    <div>
-      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom">
+      <img fill="red" src="../assets/arrow-circle-down-solid.svg" alt="flèche vers le bas" @click="goToBottom" variant="info" class="btn-to-bottom" v-if="showBtnGoToBottom">
    </div>
 </template>
 
@@ -14,6 +14,11 @@
                left: 0,
                behavior: 'smooth'
             });
+         }
+      },
+      props: {
+         showBtnGoToBottom: {
+            type: Boolean
          }
       }
    }

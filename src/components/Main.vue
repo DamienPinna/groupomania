@@ -36,15 +36,23 @@
             </b-card>
          </div>
       </template>
+      <Btn-go-to-top/>
+      <Btn-go-to-bottom :showBtnGoToBottom="publications.length > 2"></Btn-go-to-bottom>
    </div>
 </template>
 
 <script>
    import axios from 'axios';
    import { mapState } from 'vuex';
+   import BtnGoToTop from '../components/Btn-go-to-top.vue';
+   import BtnGoToBottom from '../components/Btn-go-to-bottom.vue';
 
    export default {
       name: 'Main',
+      components: {
+         BtnGoToTop,
+         BtnGoToBottom
+      },
       data() {
          return {
             showInputTitle: -1,

@@ -52,15 +52,23 @@
             </template>
          </b-card>
       </div>
+      <Btn-go-to-top/>
+      <Btn-go-to-bottom :showBtnGoToBottom="comments.length > 6"></Btn-go-to-bottom>
    </div>
 </template>
 
 <script>
    import axios from 'axios';
    import { mapState } from 'vuex';
+   import BtnGoToTop from '../components/Btn-go-to-top.vue';
+   import BtnGoToBottom from '../components/Btn-go-to-bottom.vue';
 
    export default {
       name: 'Gif',
+      components: {
+         BtnGoToTop,
+         BtnGoToBottom
+      },
       data() {
          return {
             publication: Object,
