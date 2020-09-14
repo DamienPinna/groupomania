@@ -32,7 +32,8 @@
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId || role ==='admin'">
                         <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
                         <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId)" variant="success" size="sm">Valider</b-button>
-                        <b-button variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
+                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
+                        <b-button v-if="showInputToModifyComment === comment.commentId" variant="danger" size="sm" @click="cancelModifyComment">Annuler</b-button>
                      </div> 
                   </b-card>
                </template>
@@ -153,6 +154,10 @@
                this.getAllCommentsFromOnePublication(this.postId);
             })
             .catch(error => console.log(error)); 
+         },
+
+         cancelModifyComment() {
+            this.showInputToModifyComment = -1;
          },
 
          cancelCreateComment() {
