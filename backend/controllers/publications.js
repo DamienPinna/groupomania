@@ -37,7 +37,7 @@ exports.deletePublication = (req, res) => {
       if (error) throw error;
       const filename = results[0].gifUrl.split('/images/')[1];
       fs.unlink(`images/${filename}`, () => {
-         db.instance.query(`DELETE FROM post
+         pool.query(`DELETE FROM post
                            WHERE postId = ${req.params.id};`,
          function (error, results, fields) {
             if (error) throw error;
