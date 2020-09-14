@@ -9,7 +9,7 @@
                   <b-form inline>
                      <label class="sr-only" for="modifyPublication">titre</label>
                      <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
-                     <b-button variant="primary" @click="modifyPublication(publication.postId, newTitle)">Valider</b-button>
+                     <b-button variant="primary" @click="modifyPublication(publication.postId)">Valider</b-button>
                   </b-form>
                </template>
             </header>
@@ -81,18 +81,19 @@
             this.showInputTitle = postId;
          },
 
-         modifyPublication(postId, newTitle) {
+         modifyPublication(postId) {
             if (this.regex.test(this.newTitle)) {
                this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
                this.showErrorMessage = true;
-            } else if (newTitle !== "") {
-               const formData = { title: newTitle };
+            } else if (this.newTitle !== "") {
+               const formData = { title: this.newTitle };
                axios.put(`http://localhost:3000/api/publications/${postId}`, formData, {
                   headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
                })
                .then(response => {
                   console.log(response.data);
                   this.showInputTitle = -1;
+                  this.newTitle = '',
                   this.showErrorMessage = false;
                   this.errorMessage = '';
                   this.getAllPublications();

@@ -30,7 +30,7 @@
 
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId || role ==='admin'">
                         <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
-                        <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId, updatingComment)" variant="success" size="sm">Valider</b-button>
+                        <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId)" variant="success" size="sm">Valider</b-button>
                         <b-button variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
                      </div> 
                   </b-card>
@@ -104,15 +104,16 @@
             this.showInputToModifyComment = commentId;
          },
 
-         modifyComment(commentId, updatingComment) {
-            if (updatingComment !== "") {
-               const formData = { content: updatingComment };
+         modifyComment(commentId) {
+            if (this.updatingComment !== "") {
+               const formData = { content: this.updatingComment };
                axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
                   headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
                })
                .then(response => {
                   console.log(response.data);
                   this.showInputToModifyComment = -1;
+                  this.updatingComment = '',
                   this.getAllCommentsFromOnePublication(this.postId);
                })
                .catch(error => console.error(error));

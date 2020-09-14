@@ -3,7 +3,7 @@
       <h1 class="text-center mb-4 pt-4">Ajouter un Gif</h1>
 
       <b-alert :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
-      <b-form @submit.prevent="onSubmit(form.title, form.file)" @reset.prevent="onReset">
+      <b-form @submit.prevent="onSubmit()" @reset.prevent="onReset">
          <b-form-group label="Titre :" label-for="title">
             <b-form-input id="title" v-model="form.title" required></b-form-input>
          </b-form-group>
@@ -39,14 +39,14 @@
          ...mapState(['userId', 'tokenFromStorage', 'regex'])
       },
       methods: {
-         onSubmit(title, file) {
+         onSubmit() {
             if (this.regex.test(this.form.title)) {
                this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
                this.showErrorMessage = true;
             } else {
                const formData = new FormData();
-               formData.append('title', title);
-               formData.append('image', file);
+               formData.append('title', this.form.title);
+               formData.append('image', this.form.file);
                formData.append('userId', this.userId);
    
                axios.post('http://localhost:3000/api/publications', formData, {
