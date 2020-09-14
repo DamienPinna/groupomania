@@ -17,6 +17,7 @@
             <b-list-group flush>
                <template v-for="comment in comments" >
                   <b-card :key="comment.commentId" v-if="comment">
+                     <b-alert v-if="showInputToModifyComment === comment.commentId" :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
                      <b-card-sub-title class="mb-2">Par {{ comment.login ? comment.login : "profil supprimé"}}</b-card-sub-title>
 
@@ -71,6 +72,8 @@
       },
       data() {
          return {
+            showErrorMessage: false,
+            errorMessage: '',
             publication: Object,
             comments: Array,
             showInputToModifyComment: -1,
@@ -81,7 +84,7 @@
          }
       },
       computed: {
-         ...mapState(['userId', 'role', 'tokenFromStorage'])
+         ...mapState(['userId', 'role', 'tokenFromStorage', 'regex'])
       },
       methods: {
          getOnePublication(postId) {
@@ -102,10 +105,15 @@
          
          showInputforModification(commentId) {
             this.showInputToModifyComment = commentId;
+            this.showErrorMessage = false;
+            this.updatingComment = '';
          },
 
          modifyComment(commentId) {
-            if (this.updatingComment !== "") {
+            if (this.regex.test(this.updatingComment)) {
+               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.showErrorMessage = true;
+            } else if (this.updatingComment !== "") {
                const formData = { content: this.updatingComment };
                axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
                   headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
@@ -114,6 +122,7 @@
                   console.log(response.data);
                   this.showInputToModifyComment = -1;
                   this.updatingComment = '',
+                  this.showErrorMessage = false;
                   this.getAllCommentsFromOnePublication(this.postId);
                })
                .catch(error => console.error(error));

@@ -79,6 +79,8 @@
 
          showInputforModification(postId) {
             this.showInputTitle = postId;
+            this.showErrorMessage = false;
+            this.newTitle = '';
          },
 
          modifyPublication(postId) {
@@ -95,14 +97,11 @@
                   this.showInputTitle = -1;
                   this.newTitle = '',
                   this.showErrorMessage = false;
-                  this.errorMessage = '';
                   this.getAllPublications();
                })
                .catch(error => console.error(error));
             } else {
                this.showInputTitle = -1;
-               this.showErrorMessage = false;
-               this.errorMessage = '';
             }
          },
 
