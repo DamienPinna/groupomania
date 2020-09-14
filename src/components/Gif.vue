@@ -17,7 +17,7 @@
             <b-list-group flush>
                <template v-for="comment in comments" >
                   <b-card :key="comment.commentId" v-if="comment">
-                     <b-alert v-if="showInputToModifyComment === comment.commentId" :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
+                     <b-alert v-if="showInputToModifyComment === comment.commentId" :show="showErrorMessageModifyComment" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
                      <b-card-title>Commenté le {{ comment.date }}</b-card-title>
                      <b-card-sub-title class="mb-2">Par {{ comment.login ? comment.login : "profil supprimé"}}</b-card-sub-title>
 
@@ -40,6 +40,7 @@
             </b-list-group>
 
             <b-card v-if="showInputToCreatedComment">
+               <b-alert :show="showErrorMessageCreateComment" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
                <b-form-textarea v-model="newComment" rows="3" max-rows="5">
                   <!-- Nouveau commentaire à ajouter -->
                </b-form-textarea>
@@ -73,7 +74,8 @@
       },
       data() {
          return {
-            showErrorMessage: false,
+            showErrorMessageModifyComment: false,
+            showErrorMessageCreateComment: false,
             errorMessage: '',
             publication: Object,
             comments: Array,
@@ -106,14 +108,14 @@
          
          showInputforModification(commentId) {
             this.showInputToModifyComment = commentId;
-            this.showErrorMessage = false;
+            this.showErrorMessageModifyComment = false;
             this.updatingComment = '';
          },
 
          modifyComment(commentId) {
             if (this.regex.test(this.updatingComment)) {
                this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
-               this.showErrorMessage = true;
+               this.showErrorMessageModifyComment = true;
             } else if (this.updatingComment !== "") {
                const formData = { content: this.updatingComment };
                axios.put(`http://localhost:3000/api/comments/${commentId}`, formData, {
@@ -122,8 +124,8 @@
                .then(response => {
                   console.log(response.data);
                   this.showInputToModifyComment = -1;
+                  this.showErrorMessageModifyComment = false;
                   this.updatingComment = '',
-                  this.showErrorMessage = false;
                   this.getAllCommentsFromOnePublication(this.postId);
                })
                .catch(error => console.error(error));
@@ -132,28 +134,41 @@
             }
          },
 
+         goToBottom() {
+            window.scrollTo({
+               top: document.documentElement.scrollHeight,
+               left: 0,
+               behavior: 'smooth'
+            });
+         },
+
          showInputForCreate() {
             this.showInputToCreatedComment = true;
             setTimeout(this.goToBottom, 50);
          },
 
          createComment() {
-            const formData = {
-               userId: this.userId,
-               postId: this.postId,
-               content: this.newComment
-            };
-
-            axios.post('http://localhost:3000/api/comments', formData, {
-               headers: {'Authorization': 'Bearer ' + this.tokenFromStorage}
-            })
-            .then(response => {
-               console.log(response.data);
-               this.showInputToCreatedComment = false;
-               this.newComment = '';
-               this.getAllCommentsFromOnePublication(this.postId);
-            })
-            .catch(error => console.log(error)); 
+            if (this.regex.test(this.newComment)) {
+               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.showErrorMessageCreateComment = true;
+            } else {
+               const formData = {
+                  userId: this.userId,
+                  postId: this.postId,
+                  content: this.newComment
+               };
+               axios.post('http://localhost:3000/api/comments', formData, {
+                  headers: {'Authorization': 'Bearer ' + this.tokenFromStorage}
+               })
+               .then(response => {
+                  console.log(response.data);
+                  this.showInputToCreatedComment = false;
+                  this.showErrorMessageCreateComment = false;
+                  this.newComment = '';
+                  this.getAllCommentsFromOnePublication(this.postId);
+               })
+               .catch(error => console.log(error)); 
+            }
          },
 
          cancelModifyComment() {
@@ -162,6 +177,8 @@
 
          cancelCreateComment() {
             this.showInputToCreatedComment = false;
+            this.showErrorMessageCreateComment = false;
+            this.newComment = '';
          },
 
          deleteComment(commentId) {
