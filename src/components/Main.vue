@@ -75,7 +75,10 @@
             axios.get('http://localhost:3000/api/publications', {
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
-            .then(response => this.publications = response.data)
+            .then(response => {
+               if (this.pseudonymForSearch !== '') this.publications = response.data.filter(publication => publication.login === this.pseudonymForSearch);
+               else this.publications = response.data;
+            })
             .catch(error => console.error(error));
          },
 
@@ -124,10 +127,9 @@
       },
       mounted() {
          this.getAllPublications();
-      },
-      created() {
          bus.$on('filterByPseudonym', pseudonymForSearch => {
             this.pseudonymForSearch = pseudonymForSearch;
+            this.getAllPublications();
          })
       }
    }
