@@ -15,8 +15,8 @@
          
             <b-navbar-nav class="ml-auto">
                <b-nav-form>
-                  <b-form-input size="sm" class="mr-sm-2"></b-form-input>
-                  <b-button size="sm" class="my-2 my-sm-0" type="submit">Chercher</b-button>
+                  <b-form-input size="sm" class="mr-sm-2" v-model="pseudonymForSearch"></b-form-input>
+                  <b-button size="sm" class="my-2 my-sm-0" @click="filterByPseudonym">Chercher</b-button>
                </b-nav-form>
 
                <b-nav-item-dropdown right >
@@ -35,9 +35,15 @@
 <script>
    import axios from 'axios';
    import { mapState } from 'vuex';
+   import { bus } from '../main';
 
    export default {
       name: 'Navbar',
+      data() {
+         return {
+            pseudonymForSearch: ''
+         }
+      },
       computed: {
          ...mapState(['login','userId'])
       },
@@ -59,8 +65,11 @@
    
          goToAddGifPage() {
             this.$router.push('/add-gif');
-         }
+         },
 
+         filterByPseudonym() {
+            bus.$emit('filterByPseudonym', this.pseudonymForSearch);
+         }
       },
       created() {
          this.$store.dispatch('defineUser');

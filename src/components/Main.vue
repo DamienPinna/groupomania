@@ -49,6 +49,7 @@
    import { mapState } from 'vuex';
    import BtnGoToTop from '../components/Btn-go-to-top.vue';
    import BtnGoToBottom from '../components/Btn-go-to-bottom.vue';
+   import { bus } from '../main';
 
    export default {
       name: 'Main',
@@ -62,7 +63,8 @@
             errorMessage: '',
             showInputTitle: -1,
             publications: Array,
-            newTitle: ''
+            newTitle: '',
+            pseudonymForSearch: ''
          }
       },
       computed: {
@@ -122,6 +124,11 @@
       },
       mounted() {
          this.getAllPublications();
+      },
+      created() {
+         bus.$on('filterByPseudonym', pseudonymForSearch => {
+            this.pseudonymForSearch = pseudonymForSearch;
+         })
       }
    }
 </script>

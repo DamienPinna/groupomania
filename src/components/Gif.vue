@@ -49,7 +49,7 @@
             <template v-slot:footer>
                <div class="d-flex justify-content-between">
                   <b-button v-if="!showInputToCreatedComment" variant="info" size="sm" @click="showInputForCreate">Commenter</b-button>
-                  <b-button v-if="showInputToCreatedComment" variant="success" size="sm" @click="createComment">Valider</b-button>
+                  <b-button v-if="showInputToCreatedComment" variant="success" size="sm" @click="createComment" :disabled="newComment === ''">Valider</b-button>
                   <b-button v-if="showInputToCreatedComment" variant="danger" size="sm" @click="cancelCreateComment">Annuler</b-button>
                </div>
             </template>
