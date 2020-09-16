@@ -1,7 +1,7 @@
 <template>
    <div class="pb-5 main">
       <b-container v-if="publications.length === 0" class="pt-5 text-center">
-         <b-alert variant="dark">Pas de publications avec ce pseudonyme !</b-alert>
+         <b-alert show variant="dark">Pas de publications avec ce pseudonyme !</b-alert>
       </b-container>
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
