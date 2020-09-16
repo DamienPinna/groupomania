@@ -14,7 +14,7 @@
             </b-navbar-nav>
          
             <b-navbar-nav class="ml-auto">
-               <b-nav-form>
+               <b-nav-form v-show="showSearchBar">
                   <b-form-input size="sm" class="mr-sm-2" v-model="pseudonymForSearch"></b-form-input>
                   <b-button size="sm" class="my-2 my-sm-0" @click="filterByPseudonym">Chercher</b-button>
                </b-nav-form>
@@ -79,6 +79,9 @@
             type: Boolean
          },
          showAllGif: {
+            type: Boolean
+         },
+         showSearchBar: {
             type: Boolean
          }
       }

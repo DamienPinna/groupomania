@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Navbar :showAddGif="true"></Navbar>
+      <Navbar :showAddGif="true" :showSearchBar="true"></Navbar>
       <Main/>
   </div>
 </template>
