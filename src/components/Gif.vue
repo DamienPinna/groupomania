@@ -87,7 +87,7 @@
          }
       },
       computed: {
-         ...mapState(['userId', 'role', 'tokenFromStorage', 'regex'])
+         ...mapState(['userId', 'role', 'tokenFromStorage', 'regex', 'characterErrorMessage'])
       },
       methods: {
          getOnePublication(postId) {
@@ -114,7 +114,7 @@
 
          modifyComment(commentId) {
             if (this.regex.test(this.updatingComment)) {
-               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.errorMessage = this.characterErrorMessage;
                this.showErrorMessageModifyComment = true;
             } else if (this.updatingComment !== "") {
                const formData = { content: this.updatingComment };

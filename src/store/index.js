@@ -9,6 +9,7 @@ export default new Vuex.Store({
          login: '',
          role: '',
          tokenFromStorage: '',
+         characterErrorMessage: 'Les caractères < " & et > ne sont pas autorisés.',
          regex: /<|>|"|&/
    },
    mutations: {

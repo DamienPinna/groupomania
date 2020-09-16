@@ -2,7 +2,7 @@
    <b-container class="mt-4">
       <h1 class="text-center mb-4">Connexion</h1>
 
-      <b-alert :show="showErrorMessage" variant="danger" class="text-center">
+      <b-alert :show="showErrorMessage" :variant="colorErrorMessage" class="text-center">
          {{ errorMessage }}
       </b-alert>
       <b-form @submit.prevent="login">
@@ -28,6 +28,7 @@
          return {
             showErrorMessage: false,
             errorMessage: '',
+            colorErrorMessage: '',
             form: {
                login: '',
                password: ''
@@ -35,12 +36,13 @@
          }
       },
       computed: {
-         ...mapState(['regex'])
+         ...mapState(['regex', 'characterErrorMessage'])
       },
       methods: {
          login() {
             if (this.regex.test(this.form.login) || this.regex.test(this.form.password)) {
-               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.errorMessage = this.characterErrorMessage;
+               this.colorErrorMessage = 'danger',
                this.showErrorMessage = true;
             } else {
                axios.post('http://localhost:3000/api/auth/login', {
@@ -54,6 +56,7 @@
                .catch(error => {
                   console.error(error.message);
                   this.errorMessage = error.response.data.message;
+                  this.colorErrorMessage = 'warning',
                   this.showErrorMessage = true;
                })
             }
