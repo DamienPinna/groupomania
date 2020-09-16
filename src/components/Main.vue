@@ -1,5 +1,8 @@
 <template>
    <div class="pb-5 main">
+      <b-container v-if="publications.length === 0" class="pt-5 text-center">
+         <b-alert variant="dark">Pas de publications avec ce pseudonyme !</b-alert>
+      </b-container>
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
             <header>
@@ -76,7 +79,7 @@
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => {
-               if (this.pseudonymForSearch !== '') this.publications = response.data.filter(publication => publication.login === this.pseudonymForSearch);
+               if (this.pseudonymForSearch !== '') this.publications = response.data.filter(publication => publication.login.toLowerCase() === this.pseudonymForSearch.toLowerCase());
                else this.publications = response.data;
             })
             .catch(error => console.error(error));
