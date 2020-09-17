@@ -149,7 +149,7 @@
 
          createComment() {
             if (this.regex.test(this.newComment)) {
-               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.errorMessage = this.characterErrorMessage;
                this.showErrorMessageCreateComment = true;
             } else {
                const formData = {
