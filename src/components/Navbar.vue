@@ -15,7 +15,7 @@
          
             <b-navbar-nav class="ml-auto">
                <b-nav-form v-show="showSearchBar">
-                  <b-form-input size="sm" class="mr-sm-2" v-model="pseudonymForSearch"></b-form-input>
+                  <b-form-input size="sm" class="mr-sm-2" :placeholder="contentPlaceholder" v-model="pseudonymForSearch" @focus="placeholderActive"></b-form-input>
                   <b-button size="sm" class="my-2 my-sm-0" @click="filterByPseudonym">Chercher</b-button>
                </b-nav-form>
 
@@ -41,13 +41,18 @@
       name: 'Navbar',
       data() {
          return {
-            pseudonymForSearch: ''
+            pseudonymForSearch: '',
+            contentPlaceholder: 'Recherche par pseudo'
          }
       },
       computed: {
          ...mapState(['login','userId'])
       },
       methods: {
+         placeholderActive() {
+            this.contentPlaceholder = '';
+         },
+
          logout() {
             localStorage.removeItem('token');
             this.$router.push('/');
