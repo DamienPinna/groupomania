@@ -10,20 +10,17 @@ module.exports = (req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
       const decodedToken = jwt.verify(token, process.env.SECRET);
       const userIdFromToken = decodedToken.userId;
-      if (req.body.userId && req.body.userId !== userIdFromToken) {
-         throw 'id utilisateur invalide';
-      } else {
-         pool.query(`SELECT commentId, userId
-               FROM comment
-               WHERE commentId = ${req.params.id};`,
-         function (error, results, fields) {
-            if (error) throw error;
-            const userIdFromPost = results[0].userId;
-            if (userIdFromPost === userIdFromToken || decodedToken.role === 'admin') next();
-            else res.status(403).json({message: 'accès refusé'});
-         });
-      };
-   } catch (error) {
-      res.status(401).json({error});
+      
+      pool.query(`SELECT commentId, userId
+            FROM comment
+            WHERE commentId = ${req.params.id};`,
+      function (error, results, fields) {
+         if (error) throw error;
+         const userIdFromPost = results[0].userId;
+         if (userIdFromPost === userIdFromToken || decodedToken.role === 'admin') next();
+         else res.status(403).json({message: 'id utilisateur invalide'});
+      });
+   } catch {
+      res.status(401).json({message : 'utilisateur non authentifié'});
    };
 };
