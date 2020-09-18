@@ -107,7 +107,12 @@
                   this.showErrorMessage = false;
                   this.getAllPublications();
                })
-               .catch(error => console.error(error));
+               .catch(error => {
+                  console.error(error.message);
+                  this.errorMessage = error.response.data.message;
+                  this.colorErrorMessage = 'warning';
+                  this.showErrorMessage = true;
+               });
             } else {
                this.showInputTitle = -1;
             }

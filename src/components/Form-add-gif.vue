@@ -40,10 +40,10 @@
       },
       methods: {
          onSubmit() {
-            if (this.regex.test(this.form.title)) {
-               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
-               this.showErrorMessage = true;
-            } else {
+            // if (this.regex.test(this.form.title)) {
+            //    this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+            //    this.showErrorMessage = true;
+            // } else {
                const formData = new FormData();
                formData.append('title', this.form.title);
                formData.append('image', this.form.file);
@@ -59,8 +59,12 @@
                   console.log(response.data);
                   this.$router.push('/home');
                })
-               .catch(error => console.error(error))
-            }
+               .catch(error => {
+                  console.error(error.message);
+                  this.errorMessage = error.response.data.message;
+                  this.showErrorMessage = true;
+               })
+            // }
          },
 
          onReset() {
