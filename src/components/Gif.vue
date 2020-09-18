@@ -128,7 +128,11 @@
                   this.updatingComment = '',
                   this.getAllCommentsFromOnePublication(this.postId);
                })
-               .catch(error => console.error(error));
+               .catch(error => {
+                  console.error(error.message);
+                  this.errorMessage = error.response.data.message;
+                  this.showErrorMessageModifyComment = true;
+               });
             } else {
                this.showInputToModifyComment = -1;
             }
@@ -167,7 +171,11 @@
                   this.newComment = '';
                   this.getAllCommentsFromOnePublication(this.postId);
                })
-               .catch(error => console.log(error)); 
+               .catch(error => {
+                  console.error(error.message);
+                  this.errorMessage = error.response.data.message;
+                  this.showErrorMessageCreateComment = true;
+               }); 
             }
          },
 
