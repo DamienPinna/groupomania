@@ -40,19 +40,19 @@
       },
       methods: {
          onSubmit() {
-            // if (this.regex.test(this.form.title)) {
-            //    this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
-            //    this.showErrorMessage = true;
-            // } else {
+            if (this.regex.test(this.form.title)) {
+               this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.showErrorMessage = true;
+            } else {
                const formData = new FormData();
                formData.append('title', this.form.title);
                formData.append('image', this.form.file);
                formData.append('userId', this.userId);
-   
+
                axios.post('http://localhost:3000/api/publications', formData, {
                   headers: {
                      'Authorization': 'Bearer ' + this.tokenFromStorage,
-                     'content-type': 'multipart/form-data'
+                     'content-type': 'multipart/form-data',
                   }
                })
                .then(response => {
@@ -64,7 +64,7 @@
                   this.errorMessage = error.response.data.message;
                   this.showErrorMessage = true;
                })
-            // }
+            }
          },
 
          onReset() {

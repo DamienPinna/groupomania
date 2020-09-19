@@ -5,12 +5,18 @@ const pool = require('../db');
  * Créé une publication.
  */
 exports.createPublication = (req, res) => {
-   pool.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
-               VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
-   function (error, results, fields) {
-      if (error) throw error;
-      res.status(200).json({message: 'Publication enregistrée'});
-   });
+   const regex = /<|>|"|&/;
+   
+   if (regex.test(req.body.title) ) {
+      res.status(500).json({message: 'Les caractères < " & et > ne sont pas autorisés.'});
+   } else {
+      pool.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
+                  VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
+      function (error, results, fields) {
+         if (error) throw error;
+         res.status(200).json({message: 'Publication enregistrée'});
+      });
+   };
 };
 
 /**

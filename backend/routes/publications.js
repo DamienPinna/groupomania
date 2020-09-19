@@ -7,7 +7,7 @@ const sanitize = require('../middleware/sanitize');
 const multer = require('../middleware/multer-config');
 const publicationsController = require('../controllers/publications');
 
-router.post('/', sanitize, auth, multer, publicationsController.createPublication);
+router.post('/', auth, multer, publicationsController.createPublication);
 router.put('/:id', sanitize, authAccessPublications, publicationsController.modifyPublication);
 router.delete('/:id', authAccessPublications, publicationsController.deletePublication);
 router.get('/:id', auth, publicationsController.getOnePublication);
