@@ -26,7 +26,9 @@ exports.signup = async (req, res) => {
       pool.query(`INSERT INTO user (login,password)
                   VALUES ("${req.body.login}","${hashedPassword}");`,
       function (error, results, fields) {
-         if (error) throw error;
+         if (error) {
+            res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
+         };
          res.status(200).json({message: 'Utilisateur enregistré'});
       });
    } else {
@@ -45,12 +47,14 @@ exports.login = async (req, res) => {
                ON user.roleId = role.roleId
                WHERE login="${req.body.login}";`,
    async function (error, results, fields) {
-      if (error) throw error;
+      if (error) {
+         return res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
+      };
       const user = JSON.parse(JSON.stringify(results)); //user est un tableau contenant un objet.
-      if (user.length === 0) return res.status(400).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
+      if (user.length === 0) return res.status(401).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
       try {
          const valid = await bcrypt.compare(req.body.password, user[0].password);
-         if(!valid) return res.status(400).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
+         if(!valid) return res.status(401).json({message: 'Pseudonyme et/ou mot de passe incorrect !'});
          res.status(200).json({
             userId: user[0].userId,
             token: jwt.sign(
