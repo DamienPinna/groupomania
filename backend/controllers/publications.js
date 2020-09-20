@@ -13,7 +13,9 @@ exports.createPublication = (req, res) => {
       pool.query(`INSERT INTO post (title,dateStamp,gifUrl,userId)
                   VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
       function (error, results, fields) {
-         if (error) throw error;
+         if (error) {
+            return res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
+         };
          res.status(200).json({message: 'Publication enregistrée'});
       });
    };

@@ -133,7 +133,7 @@
                console.log(response.data);
                this.getAllPublications();
             })
-            .catch(error => console.error(error));
+            .catch(error => console.error(error.message));
          },
 
          goToUniqueGif(postId) {

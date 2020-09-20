@@ -2,7 +2,7 @@
    <b-container>
       <h1 class="text-center mb-4 pt-4">Ajouter un Gif</h1>
 
-      <b-alert :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
+      <b-alert :show="showErrorMessage" :variant="colorErrorMessage" class="text-center">{{ errorMessage }}</b-alert>
       <b-form @submit.prevent="onSubmit()" @reset.prevent="onReset">
          <b-form-group label="Titre :" label-for="title">
             <b-form-input id="title" v-model="form.title" required></b-form-input>
@@ -29,6 +29,7 @@
          return {
             showErrorMessage: false,
             errorMessage: '',
+            colorErrorMessage: '',
             form: {
                title: '',
                file: null
@@ -42,6 +43,7 @@
          onSubmit() {
             if (this.regex.test(this.form.title)) {
                this.errorMessage = 'Les caractères < " & et > ne sont pas autorisés.';
+               this.colorErrorMessage = 'danger';
                this.showErrorMessage = true;
             } else {
                const formData = new FormData();
@@ -62,6 +64,7 @@
                .catch(error => {
                   console.error(error.message);
                   this.errorMessage = error.response.data.message;
+                  this.colorErrorMessage = 'warning';
                   this.showErrorMessage = true;
                })
             }

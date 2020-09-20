@@ -95,7 +95,7 @@
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => this.publication = response.data[0])
-            .catch(error => console.error(error));
+            .catch(error => console.error(error.message));
          },
 
          getAllCommentsFromOnePublication(postId) {
@@ -103,7 +103,7 @@
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => this.comments = response.data)
-            .catch(error => console.error(error));
+            .catch(error => console.error(error.message));
          },
          
          showInputforModification(commentId) {
@@ -197,7 +197,7 @@
                console.log(response.data);
                this.getAllCommentsFromOnePublication(this.postId);
             })
-            .catch(error => console.log(error));
+            .catch(error => console.log(error.message));
          }
       },
       mounted() {
