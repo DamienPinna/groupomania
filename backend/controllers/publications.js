@@ -80,7 +80,9 @@ exports.getAllPublications = (req, res) => {
                ON post.userId = user.userId
                ORDER BY postId;`,
    function (error, results, fields) {
-      if (error) throw error;
+      if (error) {
+         return res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
+      };
       res.status(200).json(results);
    });
 };

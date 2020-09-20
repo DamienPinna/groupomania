@@ -1,7 +1,7 @@
 <template>
    <div class="pb-5 main">
-      <b-container v-if="publications.length === 0" class="pt-5 text-center">
-         <b-alert show variant="dark">Pas de publications avec ce pseudonyme !</b-alert>
+      <b-container v-if="publications.length === 0 || showErrorNetwork" class="pt-5 text-center">
+         <b-alert show variant="warning">{{ errorMessage }}</b-alert>
       </b-container>
       <template v-for="publication in publications">
          <div :key="publication.postId" class="mx-auto pt-5 item">
@@ -63,8 +63,9 @@
       data() {
          return {
             showErrorMessage: false,
-            errorMessage: '',
+            showErrorNetwork: false,
             showInputTitle: -1,
+            errorMessage: '',
             publications: Array,
             newTitle: '',
             pseudonymForSearch: ''
@@ -79,10 +80,17 @@
                headers: {'Authorization':'Bearer ' + this.tokenFromStorage}
             })
             .then(response => {
-               if (this.pseudonymForSearch !== '') this.publications = response.data.filter(publication => publication.login.toLowerCase() === this.pseudonymForSearch.toLowerCase());
+               if (this.pseudonymForSearch !== '') { 
+                  this.errorMessage = 'Pas de publications avec ce pseudonyme !';
+                  this.publications = response.data.filter(publication => publication.login.toLowerCase() === this.pseudonymForSearch.toLowerCase());
+               }
                else this.publications = response.data;
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+               console.error(error.message);
+               this.errorMessage = error.response.data.message;
+               this.showErrorNetwork = true;
+            });
          },
 
          showInputforModification(postId) {
@@ -110,7 +118,6 @@
                .catch(error => {
                   console.error(error.message);
                   this.errorMessage = error.response.data.message;
-                  this.colorErrorMessage = 'warning';
                   this.showErrorMessage = true;
                });
             } else {

@@ -27,7 +27,7 @@ exports.signup = async (req, res) => {
                   VALUES ("${req.body.login}","${hashedPassword}");`,
       function (error, results, fields) {
          if (error) {
-            res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
+            return res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
          };
          res.status(200).json({message: 'Utilisateur enregistré'});
       });

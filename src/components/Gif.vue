@@ -76,11 +76,11 @@
          return {
             showErrorMessageModifyComment: false,
             showErrorMessageCreateComment: false,
+            showInputToCreatedComment: false,
+            showInputToModifyComment: -1,
             errorMessage: '',
             publication: Object,
             comments: Array,
-            showInputToModifyComment: -1,
-            showInputToCreatedComment: false,
             postId: Number,
             updatingComment: '',
             newComment: ''
