@@ -1,7 +1,7 @@
 # groupomania
 
 ## Description
-Projet n°7 du parcours "développeur web" d'openclasrooms.
+Projet n°7 du parcours "développeur web" d'openclassrooms.
 
 Réalisation d'un réseau social d'entreprise permettant le partage de gif.
 
