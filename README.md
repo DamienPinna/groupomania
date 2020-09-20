@@ -13,8 +13,11 @@ Réalisation d'un réseau social d'entreprise permettant le partage de gif.
 Ecrire dans ce fichier :
 
 DB_HOST=localhost
+
 DB_USER=renseigner ici le nom de l'utilisateur que vous aurez créé dans votre base de données
+
 DB_PASS=renseigner ici le mot de passe de l'utilisateur que vous aurez créé dans votre base de données
+
 DB_NAME=groupomania
 
 SECRET=renseigner ici le secret pour le TOKEN
