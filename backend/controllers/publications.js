@@ -6,7 +6,7 @@ const pool = require('../db');
  */
 exports.createPublication = (req, res) => {
    const regex = /<|>|"|&/;
-   
+
    if (regex.test(req.body.title) ) {
       res.status(500).json({message: 'Les caractères < " & et > ne sont pas autorisés.'});
    } else {
@@ -14,6 +14,7 @@ exports.createPublication = (req, res) => {
                   VALUES ("${req.body.title}",NOW(),"${req.protocol}://${req.get('host')}/images/${req.file.filename}","${req.body.userId}");`,
       function (error, results, fields) {
          if (error) {
+            fs.unlinkSync(`images/${req.file.filename}`);
             return res.status(503).json({message: 'Problème de connexion avec la base de données, veuillez réessayer plus tard.'});
          };
          res.status(200).json({message: 'Publication enregistrée'});
