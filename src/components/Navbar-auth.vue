@@ -1,6 +1,6 @@
 <template>
   <div>
-      <b-navbar toggleable="sm" type="dark" variant="info">
+      <b-navbar toggleable="sm" type="light" variant="info">
          <b-navbar-brand>
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
@@ -9,8 +9,8 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav class="ml-auto">
-               <b-nav-item @click="goToSignupPage" :disabled="isDisabledSignup"><span class="text-white mr-3" :class="activeSignup">Inscription</span></b-nav-item>
-               <b-nav-item @click="goToConnexionPage" :disabled="isDisabledLogin"><span class="text-white" :class="activeLogin">Connexion</span></b-nav-item>
+               <b-nav-item @click="goToSignupPage" :disabled="isDisabledSignup"><span class="mr-3 h6 text-black" :class="activeSignup">Inscription</span></b-nav-item>
+               <b-nav-item @click="goToConnexionPage" :disabled="isDisabledLogin"><span class="h6 text-black" :class="activeLogin">Connexion</span></b-nav-item>
             </b-navbar-nav>
          </b-collapse>
       </b-navbar>
@@ -61,6 +61,10 @@
       display: flex;
       justify-content: center;
       align-content: center;
+   }
+
+   .text-black {
+      color: #000;
    }
 
    @media screen and (max-width: 1240px) {

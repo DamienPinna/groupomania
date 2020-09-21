@@ -1,6 +1,6 @@
 <template>
    <div>
-      <Navbar-auth :isDisabledLogin="true" activeLogin="border-bottom font-weight-bold"></Navbar-auth>
+      <Navbar-auth :isDisabledLogin="true" activeLogin="border-bottom border-dark font-weight-bold"></Navbar-auth>
       <Form-login/>
    </div>
 </template>

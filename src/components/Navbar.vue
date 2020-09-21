@@ -1,6 +1,6 @@
 <template>
   <div>
-      <b-navbar toggleable="md" type="dark" variant="info" fixed="top">
+      <b-navbar toggleable="md" type="light" variant="info" fixed="top">
          <b-navbar-brand>
             <img src="../assets/icon-left-font-monochrome-black.svg" class="d-inline-block align-top" alt="logo groupomania">
          </b-navbar-brand>
@@ -9,19 +9,20 @@
 
          <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-               <b-nav-item v-show="showAddGif" @click="goToAddGifPage"><span class="text-white">Ajouter un Gif</span></b-nav-item>
-               <b-nav-item v-show="showAllGif" @click="goToHomePage"><span class="text-white">Voir tous les Gif</span></b-nav-item>
+               <b-nav-item v-show="showAddGif" @click="goToAddGifPage"><span class="text-black h6">Ajouter un Gif</span></b-nav-item>
+               <b-nav-item v-show="showAllGif" @click="goToHomePage"><span class="text-black h6">Voir tous les Gif</span></b-nav-item>
             </b-navbar-nav>
          
             <b-navbar-nav class="ml-auto">
                <b-nav-form v-show="showSearchBar">
-                  <b-form-input size="sm" class="mr-sm-2" :placeholder="contentPlaceholder" v-model="pseudonymForSearch" @focus="placeholderActive"></b-form-input>
-                  <b-button size="sm" class="my-2 my-sm-0" @click="filterByPseudonym">Chercher</b-button>
+                  <label class="sr-only" for="pseudonymForSearch">Champ de recherche par pseudonyme</label>
+                  <b-form-input id="pseudonymForSearch" class="mr-sm-2" :placeholder="contentPlaceholder" v-model="pseudonymForSearch" @focus="placeholderActive"></b-form-input>
+                  <b-button class="my-2 my-sm-0" @click="filterByPseudonym">Chercher</b-button>
                </b-nav-form>
 
                <b-nav-item-dropdown right >
                   <template v-slot:button-content>
-                     <span class="text-white">{{ login }}</span>
+                     <span class="text-black h6">{{ login }}</span>
                   </template>
                   <b-dropdown-item @click="deleteUser">Supprimer profil</b-dropdown-item>
                   <b-dropdown-item @click="logout">Déconnexion</b-dropdown-item>
@@ -107,6 +108,10 @@
       display: flex;
       justify-content: center;
       align-content: center;
+   }
+
+   .text-black {
+      color: #000;
    }
 
    @media screen and (max-width: 1240px) {

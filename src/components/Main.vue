@@ -10,7 +10,7 @@
                <template v-if="showInputTitle === publication.postId">
                   <b-alert :show="showErrorMessage" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
                   <b-form inline>
-                     <label class="sr-only" for="modifyPublication">titre</label>
+                     <label class="sr-only" for="modifyPublication">Titre de la publication</label>
                      <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
                      <b-button variant="primary" @click="modifyPublication(publication.postId)">Valider</b-button>
                   </b-form>
@@ -28,7 +28,7 @@
 
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                     <b-button variant="info" size="sm" @click="goToUniqueGif(publication.postId)">
+                     <b-button class="text-black" variant="info" @click="goToUniqueGif(publication.postId)">
                         Commentaires
                         <b-badge variant="light">{{publication.nbComments}} <span class="sr-only">Nombre de commentaire</span></b-badge>
                      </b-button>
@@ -164,5 +164,9 @@
 
    .pointer {
       cursor: pointer;
+   }
+
+   .text-black {
+      color: #000;
    }
 </style>
