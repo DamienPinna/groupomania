@@ -29,7 +29,7 @@
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
                      <b-button variant="info" @click="goToUniqueGif(publication.postId)">
-                        <span class="text-black">Commentaires</span>
+                        <span class="text-black">Commentaires </span>
                         <b-badge variant="light">{{publication.nbComments}} <span class="sr-only">Nombre de commentaire</span></b-badge>
                      </b-button>
                      
