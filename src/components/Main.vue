@@ -12,7 +12,7 @@
                   <b-form inline>
                      <label class="sr-only" for="modifyPublication">Titre de la publication</label>
                      <b-input id="modifyPublication" class="mb-2 mr-sm-2 mb-sm-0" :placeholder="publication.title" v-model="newTitle"></b-input>
-                     <b-button variant="primary" @click="modifyPublication(publication.postId)">Valider</b-button>
+                     <b-button variant="primary" @click="modifyPublication(publication.postId)"><span class="text-black">Valider</span></b-button>
                   </b-form>
                </template>
             </header>
@@ -23,17 +23,17 @@
             
             <b-card no-body>
                <a @click="goToUniqueGif(publication.postId)" class="mx-auto pointer">
-                  <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
+                  <b-card-img :src="publication.gifUrl" alt="Image animée"></b-card-img>
                </a>
 
                <template v-slot:footer>
                   <div class="d-flex justify-content-between">
-                     <b-button class="text-black" variant="info" @click="goToUniqueGif(publication.postId)">
-                        Commentaires
+                     <b-button variant="info" @click="goToUniqueGif(publication.postId)">
+                        <span class="text-black">Commentaires</span>
                         <b-badge variant="light">{{publication.nbComments}} <span class="sr-only">Nombre de commentaire</span></b-badge>
                      </b-button>
                      
-                     <b-dropdown v-if="userId === publication.userId || role === 'admin'" variant="info" size="sm" right>
+                     <b-dropdown v-if="userId === publication.userId || role === 'admin'" variant="info" size="sm" aria-label="flèche vers le bas pour dérouler un menu afficher un bouton modifier et un boutton supprimer" right>
                         <b-dropdown-item @click="showInputforModification(publication.postId)">Modifier</b-dropdown-item>
                         <b-dropdown-item @click="deletePublication(publication.postId)">Supprimer</b-dropdown-item>
                      </b-dropdown>

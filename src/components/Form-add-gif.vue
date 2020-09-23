@@ -8,13 +8,13 @@
             <b-form-input id="title" v-model="form.title" required></b-form-input>
          </b-form-group>
 
-         <b-form-group label="Gif :" label-for="gif">
+         <b-form-group label="Gif :">
             <b-form-file accept=".gif" id="gif" v-model="form.file" placeholder="Choisissez un fichier ou déposez-le ici..." drop-placeholder="Déposer le fichier ici..." required></b-form-file>
             <div class="mt-3">Fichier sélectionné : {{ form.file ? form.file.name : '' }}</div>
          </b-form-group>
 
-         <b-button class="mr-2" type="submit" variant="info" :disabled="form.title === '' || form.file === null">Ajouter</b-button>
-         <b-button type="reset" variant="danger" :disabled="form.title === '' && form.file === null">Effacer</b-button>
+         <b-button class="mr-2" type="submit" variant="info" :disabled="form.title === '' || form.file === null"><span class="text-black">Ajouter</span></b-button>
+         <b-button type="reset" variant="danger" :disabled="form.title === '' && form.file === null"><span class="text-black">Effacer</span></b-button>
       </b-form>
    </b-container>
 </template>
@@ -82,5 +82,9 @@
 <style>
    .container {
       margin-top: 56px;
+   }
+
+   .text-black {
+      color: #000;
    }
 </style>

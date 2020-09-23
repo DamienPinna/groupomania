@@ -11,7 +11,7 @@
 
          <b-card no-body>
             <div class="mx-auto" v-if="publication.gifUrl">
-               <b-card-img :src="publication.gifUrl" img-alt="Image animée"></b-card-img>
+               <b-card-img :src="publication.gifUrl" alt="Image animée"></b-card-img>
             </div>
 
             <b-list-group flush>
@@ -25,15 +25,16 @@
                         {{ comment.content }}
                      </b-card-text>
 
-                     <b-form-textarea v-if="showInputToModifyComment === comment.commentId" :placeholder="comment.content" v-model="updatingComment" rows="3" max-rows="5" class="mb-3"> 
+                     <label class="sr-only" for="modifyComment">Champ pour modifier le commentaire</label>
+                     <b-form-textarea id="modifyComment" v-if="showInputToModifyComment === comment.commentId" :placeholder="comment.content" v-model="updatingComment" rows="3" max-rows="5" class="mb-3"> 
                         {{ comment.content }}
                      </b-form-textarea>
 
                      <div class="d-flex justify-content-between" v-if="comment.userId === userId || role ==='admin'">
-                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" size="sm" @click="showInputforModification(comment.commentId)">Modifier</b-button>
-                        <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId)" variant="success" size="sm" :disabled="updatingComment === ''">Valider</b-button>
-                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="danger" size="sm" @click="deleteComment(comment.commentId)">Supprimer</b-button>
-                        <b-button v-if="showInputToModifyComment === comment.commentId" variant="danger" size="sm" @click="cancelModifyComment">Annuler</b-button>
+                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="secondary" @click="showInputforModification(comment.commentId)">Modifier</b-button>
+                        <b-button v-if="showInputToModifyComment === comment.commentId" @click="modifyComment(comment.commentId)" variant="success" :disabled="updatingComment === ''">Valider</b-button>
+                        <b-button v-if="showInputToModifyComment !== comment.commentId" variant="danger" @click="deleteComment(comment.commentId)">Supprimer</b-button>
+                        <b-button v-if="showInputToModifyComment === comment.commentId" variant="danger" @click="cancelModifyComment">Annuler</b-button>
                      </div> 
                   </b-card>
                </template>
@@ -41,16 +42,17 @@
 
             <b-card v-if="showInputToCreatedComment">
                <b-alert :show="showErrorMessageCreateComment" variant="danger" class="text-center">{{ errorMessage }}</b-alert>
-               <b-form-textarea v-model="newComment" rows="3" max-rows="5">
+               <label class="sr-only" for="addComment">Champ pour ajouter un nouveau commentaire</label>
+               <b-form-textarea id="addComment" v-model="newComment" rows="3" max-rows="5">
                   <!-- Nouveau commentaire à ajouter -->
                </b-form-textarea>
             </b-card>
 
             <template v-slot:footer>
                <div class="d-flex justify-content-between">
-                  <b-button v-if="!showInputToCreatedComment" variant="info" size="sm" @click="showInputForCreate">Commenter</b-button>
-                  <b-button v-if="showInputToCreatedComment" variant="success" size="sm" @click="createComment" :disabled="newComment === ''">Valider</b-button>
-                  <b-button v-if="showInputToCreatedComment" variant="danger" size="sm" @click="cancelCreateComment">Annuler</b-button>
+                  <b-button v-if="!showInputToCreatedComment" variant="info" @click="showInputForCreate"><span class="text-black">Commenter</span></b-button>
+                  <b-button v-if="showInputToCreatedComment" variant="success" @click="createComment" :disabled="newComment === ''">Valider</b-button>
+                  <b-button v-if="showInputToCreatedComment" variant="danger" @click="cancelCreateComment">Annuler</b-button>
                </div>
             </template>
          </b-card>
@@ -223,6 +225,10 @@
 
    .card-title {
       font-size: 15px;
+   }
+
+   .text-black {
+      color: #000;
    }
 
    @media screen and (max-width: 360px) {
